@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Symbols LinesOfCode="133" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.10.5.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+  <Class Class="#1=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute">
+    <Instance Declaration="#2=M:[SAP_Import]SAP_Import.MainWindow::ProgressStart()" Id="ab23602a04d95429">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#3=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute+DispatchedMethodAspect" Description="#4=Executes the method in the object thread" Ordinal="3" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#5=M:[SAP_Import]SAP_Import.MainWindow::ProgressEnd()" Id="ab23602ac429731c">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#3" Description="#4" Ordinal="4" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#6=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.BackgroundAttribute">
+    <Instance Declaration="#7=M:[SAP_Import]SAP_Import.MainWindow::DragBlock_Drop(System.Object, System.Windows.DragEventArgs)" Id="ab23602a33568026">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#6" Description="#8=Executes the method asynchronously in the thread pool" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#9=M:[SAP_Import]SAP_Import.MainWindow::Convert_Click(System.Object, System.Windows.RoutedEventArgs)" Id="ab23602a65dc0983">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#6" Description="#8" Ordinal="2" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#10=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute+DispatcherObjectAspect">
+    <Instance Declaration="#11=T:[SAP_Import]SAP_Import.MainWindow">
+      <Target LinesAvoided="5">
+        <JoinPoint Description="#12=Introduces interface(s) IDispatcherObject" Ordinal="0" LinesAvoided="2" />
+      </Target>
+    </Instance>
+  </Class>
+</Symbols>

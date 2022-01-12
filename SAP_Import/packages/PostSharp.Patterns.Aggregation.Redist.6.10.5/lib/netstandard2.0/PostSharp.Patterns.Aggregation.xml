@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>PostSharp.Patterns.Aggregation</name>
+  </assembly>
+  <members>
+    <member name="T:PostSharp.Patterns.Model.AggregatableAttribute">
+      <summary>
+            Custom attribute that, when applied to class, enables instances of this class to be involved in a parent-child relationship.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableAttribute.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" /> class.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableAttribute.ChildrenFields">
+      <summary>
+            Gets (at build time) the list of children fields together with their <see cref="T:PostSharp.Patterns.Model.ChildInfo" />.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableAttribute.DefaultItemRelationship">
+      <summary>
+            Gets or sets the default kind of relationship for collection items. 
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableAttribute.DefaultMemberRelationship">
+      <summary>
+            Gets or sets the default kind of relationship of fields and automatic properties. 
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableAttribute.IsParentSurrogate">
+      <summary>
+            Determines whether instances of the target class of this custom attribute are parent surrogates.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableAttribute.IsParentSurrogateSpecified">
+      <summary>
+            Determines whether the <see cref="P:PostSharp.Patterns.Model.AggregatableAttribute.IsParentSurrogate" /> property has been set.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.AggregatableClientAttribute">
+      <summary>
+            Base class for aspects that consume functionalities from the <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" /> aspect.
+            This class provides functionalities to advise and unadvise children.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableClientAttribute.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>PostSharp.Patterns.Model.AggregatableClientAttribute</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableClientAttribute.Advise(System.Object)">
+      <summary>
+            Injects the advice into the child object.
+            </summary>
+      <param name="obj"></param>
+      <returns>
+        <c>true</c> if the children of <paramref name="obj" /> have to be advised as well, <c>false</c> otherwise.</returns>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableClientAttribute.AppliedToCurrentType">
+      <summary>
+            Determines if the current custom attribute instance has been applied to the type of the target instance.
+            This value is <c>false</c> if the custom attribute has been applied to a base type.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableClientAttribute.CompileTimeInitialize(System.Type,PostSharp.Aspects.AspectInfo)">
+      <summary>
+              Method invoked at build time to initialize the instance fields of the current aspect. This method is invoked
+              before any other build-time method.
+            </summary>
+      <param name="type">Type to which the current aspect is applied</param>
+      <param name="aspectInfo">Reserved for future usage.</param>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AggregatableClientAttribute.InitializationStatus">
+      <summary>
+            Gets the current <see cref="T:PostSharp.Patterns.Model.AggregatableClientAttribute.AspectInitializationStatus" /> of the current aspect.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableClientAttribute.IsEligibleChild(System.Object,PostSharp.Patterns.Model.ChildInfo)">
+      <summary>
+            Determines if an object is eligible to be a child of the target instance of the current aspect.
+            </summary>
+      <param name="child"></param>
+      <param name="childInfo"></param>
+      <returns>
+        <c>true</c> if <paramref name="child" /> is eligible to be a child without injecting any advice, otherwise <c>false</c>. When this method returns <c>false</c>,
+            the aspect will the invoke the <see cref="M:PostSharp.Patterns.Model.AggregatableClientAttribute.Advise(System.Object)" /> method. </returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableClientAttribute.OnAdviseChildFailed(System.Object)">
+      <summary>
+            Method invoked when a child is assigned to a parent and the advices of the parent cannot be added to the child.
+            Implementations can choose to throw an exception (thread-aware attributes do this) or ignore the situation (<c>DisposableAttribute</c> does this).
+            </summary>
+      <param name="child">An object that's ineligible to be a child. It's guaranteed to be non-null.</param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableClientAttribute.OnInstanceConstructed">
+      <summary>
+            Executed when the target instance gets fully initialized, i.e. just after all constructors have completed.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.AggregatableClientAttribute.AspectInitializationStatus">
+      <summary>
+            Possible values for the <see cref="P:PostSharp.Patterns.Model.AggregatableClientAttribute.InitializationStatus" /> property.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.AggregatableClientAttribute.AspectInitializationStatus.Uninitialized">
+      <summary>
+            Uninitialized.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.AggregatableClientAttribute.AspectInitializationStatus.Initialized">
+      <summary>
+            The aspect is initialized, but the constructor of the target class did not complete yet.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.AggregatableClientAttribute.AspectInitializationStatus.Constructed">
+      <summary>
+            The constructor of the target class completed.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.AggregatableClientAttribute.AspectInitializationStatus.Finalizing">
+      <summary>
+            The object finalizer has been invoked.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.AggregatableExtensions">
+      <summary>
+            Provides extension methods to the <see cref="T:PostSharp.Patterns.Model.IAggregatable" /> interface.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableExtensions.GetChildren(PostSharp.Patterns.Model.IAggregatable,PostSharp.Patterns.Model.ChildVisitorOptions)">
+      <summary>
+            Gets the list of children of a specified parent object.
+            </summary>
+      <param name="parent">The parent object.</param>
+      <param name="options">Options.</param>
+      <returns>A list of children.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableExtensions.GetDistinctChildren(PostSharp.Patterns.Model.IAggregatable,PostSharp.Patterns.Model.ChildVisitorOptions)">
+      <summary>
+            Gets a list of distinct children of a specified parent object.
+            </summary>
+      <param name="parent">The parent object.</param>
+      <param name="options">Options.</param>
+      <returns></returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableExtensions.IsDescendantOf(PostSharp.Patterns.Model.IAggregatable,System.Object)">
+      <summary>
+            Determines whether a specified object is a descendant of a specified ancestor.
+            </summary>
+      <param name="child">The child object.</param>
+      <param name="ancestor">The ancestor object.</param>
+      <returns>
+        <c>true</c> if <paramref name="child" /> is a descendant of <paramref name="ancestor" />, otherwise <c>false</c>.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableExtensions.VisitSelfAndDescendants(PostSharp.Patterns.Model.IAggregatable,PostSharp.Patterns.Model.DescendantVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)">
+      <summary>
+            Executes a  <see cref="T:PostSharp.Patterns.Model.ChildVisitor" /> for the a specified parent object and all its descendants.
+            </summary>
+      <param name="parent">The parent object.</param>
+      <param name="visitor">The action to execute.</param>
+      <param name="options">Options.</param>
+      <param name="state"></param>
+      <returns></returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.AggregatableServices">
+      <summary>
+            Provide static methods to aid with implementation of the <see cref="T:PostSharp.Patterns.Model.IAggregatable" /> interface.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableServices.Advice(System.Object,PostSharp.Patterns.Model.RelationshipInfo,System.Boolean)">
+      <summary>
+            Injects the <c>Aggregatable</c> dynamic impl into an object and specifies the <see cref="T:PostSharp.Patterns.Model.RelationshipInfo" />.
+            </summary>
+      <param name="obj">The object into which the impl must be injected.</param>
+      <param name="relationshipInfo">The description of the relationship of <paramref name="obj" /> relatively to its parent.</param>
+      <param name="required">
+        <c>true</c> if an <see cref="T:System.InvalidOperationException" /> should be thrown in case <paramref name="obj" /> cannot be dynamically advised,
+            otherwise <c>false</c>.</param>
+      <returns>
+        <c>true</c> if the <c>Aggregatable</c> impl was successfully injected into <paramref name="obj" />, <c>false</c> if <paramref name="obj" /> already
+            implemented the impl, or if <paramref name="obj" /> cannot be dynamically advised and <paramref name="required" /> is false.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableServices.Advice(System.Object,PostSharp.Patterns.Model.RelationshipKind,System.Boolean)">
+      <summary>
+            Injects the <c>Aggregatable</c> dynamic impl into an object and specifies the <see cref="T:PostSharp.Patterns.Model.RelationshipKind" />.
+            </summary>
+      <param name="obj">The object into which the impl must be injected.</param>
+      <param name="itemsRelationship">The description of the relationship of <paramref name="obj" /> relatively to its parent.</param>
+      <param name="required">
+        <c>true</c> if an <see cref="T:System.InvalidOperationException" /> should be thrown in case <paramref name="obj" /> cannot be dynamically advised,
+            otherwise <c>false</c>.</param>
+      <returns>
+        <c>true</c> if the <c>Aggregatable</c> impl was successfully injected into <paramref name="obj" />, <c>false</c> if <paramref name="obj" /> already
+            implemented the impl, or if <paramref name="obj" /> cannot be dynamically advised and <paramref name="required" /> is false.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableServices.GetAggregatableAspect(System.Type,System.Boolean)">
+      <summary>
+            Gets the <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" /> instance applied on a given <see cref="T:System.Type" />.
+            </summary>
+      <param name="type">The type.</param>
+      <param name="throwing">
+        <c>true</c> if an exception should be thrown if <paramref name="type" /> does not have an <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" />, otherwise <c>false</c>.</param>
+      <returns>The <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" /> found on <paramref name="type" /></returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AggregatableServices.Unadvise(System.Object)">
+      <summary>
+            Removes the Aggregatable advise from an object.
+            </summary>
+      <param name="obj">An <see cref="T:PostSharp.Patterns.Collections.AdvisableCollection`1" /> or <see cref="T:PostSharp.Patterns.Collections.AdvisableDictionary`2" />,</param>
+      <returns>
+        <c>true</c> if the impl was removed from <paramref name="obj" />, <c>false</c> if <paramref name="obj" /> did not have
+            the Aggregatable impl.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.AncestorChangedEventArgs">
+      <summary>
+            Arguments of the <see cref="E:PostSharp.Patterns.Model.IAggregatable.AncestorChanged" /> event.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.AncestorChangedEventArgs.#ctor(System.Object)">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.AncestorChangedEventArgs" /> class.
+            </summary>
+      <param name="child">The child object.</param>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.AncestorChangedEventArgs.Child">
+      <summary>
+            Gets the child object.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.ChildAttribute">
+      <summary>
+            Custom attribute that, when applied to a field or automatic property, specifies that the object assigned to this
+            field or property is a child of the instance of the declaring type.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.ChildAttribute.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.ChildAttribute" /> class.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildAttribute.DisableBehaviorPropagation">
+      <summary>
+            Determines whether the behaviors applied to the declaring type of the target field should be applied
+            to the object assigned this field. The default value of this property is <c>false</c>, which means 
+            that behaviors such as Recordable or threading models will be applied to children (resulting in build-
+            or run-time exception if it is not possible). When it is set to <c>true</c>, behaviors will not be propagated. 
+            When applied to a field of collection type, the value applies to collection items.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildAttribute.DisableBuildTimeValidation">
+      <summary>
+            Determines whether the type of the target field or property should be validated at build-time
+            against the rules of aspects that rely on the Aggregatable model, such as the Recordable aspect
+            or the threading model aspects. If this property is set to <c>true</c>, validation will
+            be performed at runtime only.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildAttribute.IsParentSurrogate">
+      <summary>
+            Determines whether the value assigned to the field or property is a parent surrogate. The <see cref="P:PostSharp.Patterns.Model.IAggregatable.Parent" /> property
+            of children of a parent surrogate are set to the parent of the parent surrogate, instead of to the field itself.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildAttribute.ItemsRelationship">
+      <summary>
+            Determines the kind of relationship between items
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.ChildInfo">
+      <summary>
+            Describes a location (typically a field or collection item) on which a child can be attached to a parent.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.ChildInfo.#ctor(System.Reflection.FieldInfo,PostSharp.Patterns.Model.RelationshipInfo)">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.ChildInfo" /> that represents a field.
+            </summary>
+      <param name="field">A field.</param>
+      <param name="relationshipInfo">A <see cref="P:PostSharp.Patterns.Model.ChildInfo.RelationshipInfo" /> instance that describes the kind of relationship of the child
+            object to its direct parent.</param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.ChildInfo.#ctor(System.String,System.Type,PostSharp.Patterns.Model.RelationshipInfo)">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.ChildInfo" /> that represents a collection item or a custom location.
+            </summary>
+      <param name="locationName">Name of the location, for instance <c>Item</c> for a collection item.</param>
+      <param name="locationType">Type of the location.</param>
+      <param name="relationshipInfo">A <see cref="P:PostSharp.Patterns.Model.ChildInfo.RelationshipInfo" /> instance that describes the kind of relationship of the child
+            object to its direct parent.</param>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildInfo.BuildTimeVerificationDisabled">
+      <summary>
+            Determines whether aspects relying on <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" /> should verify the field at build time. This property is only relevant at build time.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildInfo.DeclarationIdentifier">
+      <summary>
+            Gets the <see cref="T:PostSharp.Reflection.DeclarationIdentifier" /> of the field where the child is stored, or <see cref="P:PostSharp.Reflection.DeclarationIdentifier.Null" />
+            if the current <see cref="T:PostSharp.Patterns.Model.ChildInfo" /> does not represent a field.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildInfo.LocationName">
+      <summary>
+            Gets the name of the location to which the child is assigned.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildInfo.LocationType">
+      <summary>
+            Gets the type of the location to which the child is assigned.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.ChildInfo.RelationshipInfo">
+      <summary>
+            Describes the kind of relationship between the child and its parent.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.ChildVisitor">
+      <summary>
+            Encapsulates a method that is invoked by the <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> method.
+            </summary>
+      <param name="child">The object being visited.</param>
+      <param name="childInfo">Describes the field or other location to which the child is assigned.</param>
+      <param name="state">An opaque state object that was requested to be passed to this delegate.</param>
+      <returns>
+        <c>true</c> to instruct the <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> implementation to continue enumerating other children, <c>false</c> 
+            to instruct the <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> implementation to immediately return the <c>false</c> value without enumerating other children.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.ChildVisitorOptions">
+      <summary>
+            Options for the <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> and <see cref="M:PostSharp.Patterns.Model.AggregatableExtensions.VisitSelfAndDescendants(PostSharp.Patterns.Model.IAggregatable,PostSharp.Patterns.Model.DescendantVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> methods.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.ChildVisitorOptions.None">
+      <summary>
+            Enumerates all children, but ignore parent surrogates.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.ChildVisitorOptions.IncludeParentSurrogates">
+      <summary>
+            Include parent surrogates.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.ChildVisitorOptions.ExcludeIndirectChildren">
+      <summary>
+            Exclude children of parent surrogates.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.ChildVisitorOptions.AcquireUpgradableReaderAccess">
+      <summary>
+            Acquires upgradable reader access instead of just reader access.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.DescendantVisitor">
+      <summary>
+            Encapsulates a method that is invoked by the <see cref="M:PostSharp.Patterns.Model.AggregatableExtensions.VisitSelfAndDescendants(PostSharp.Patterns.Model.IAggregatable,PostSharp.Patterns.Model.DescendantVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> method.
+            </summary>
+      <param name="descendant">The object being visited.</param>
+      <param name="childInfo">Describes the field or other location to which the child is assigned.</param>
+      <param name="state">An opaque state object that was requested to be passed to this delegate.</param>
+      <returns>A value that determines how the visitor should continue enumerating other objects.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.DescendantVisitorStatus">
+      <summary>
+            Type of the return value of <see cref="T:PostSharp.Patterns.Model.ChildVisitor" />. Determines how the visitor should continue enumerating other objects.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.DescendantVisitorStatus.Default">
+      <summary>
+            Equivalent to <see cref="F:PostSharp.Patterns.Model.DescendantVisitorStatus.ContinueWithChildren" /> for <see cref="M:PostSharp.Patterns.Model.AggregatableExtensions.VisitSelfAndDescendants(PostSharp.Patterns.Model.IAggregatable,PostSharp.Patterns.Model.DescendantVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" />
+            or <see cref="F:PostSharp.Patterns.Model.DescendantVisitorStatus.ContinueWithSiblings" /> for <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" />.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.DescendantVisitorStatus.Stop">
+      <summary>
+            Immediately stops enumeration and returns to the caller.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.DescendantVisitorStatus.ContinueWithChildren">
+      <summary>
+            Continues enumerating the children of the current node, then the sibling nodes. This value is not supported by the
+            <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" /> method.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.DescendantVisitorStatus.ContinueWithSiblings">
+      <summary>
+            Continues enumerating the siblings of the current node, but do not enumerate the children nodes.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.IAggregatable">
+      <summary>
+            Defines members (principally <see cref="P:PostSharp.Patterns.Model.IAggregatable.Parent" /> and <see cref="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)" />) that allow to consume parent-child relationships in an object tree.
+            </summary>
+    </member>
+    <member name="E:PostSharp.Patterns.Model.IAggregatable.AncestorChanged">
+      <summary>
+            Occurs when any ancestor changes. An ancestor is the parent of the current object or the parent of an ancestor of the current object.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.IAggregatable.Parent">
+      <summary>
+            Gets the parent of the current object.
+            </summary>
+    </member>
+    <member name="E:PostSharp.Patterns.Model.IAggregatable.ParentChanged">
+      <summary>
+            Occurs when the <see cref="P:PostSharp.Patterns.Model.IAggregatable.Parent" /> property changes.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.IAggregatable.ParentRelationship">
+      <summary>
+            Describes the relationship between the current object and its parent. Valid values are <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" /> or <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" />.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAggregatable.VisitChildren(PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)">
+      <summary>
+            Executes an action for all direct children of the current object.
+            </summary>
+      <param name="visitor">The action to be executed for each child.</param>
+      <param name="options">Options. The default behavior is to enumerate all children, but ignore parent surrogates.</param>
+      <param name="state"></param>
+      <returns>
+        <c>false</c> if <paramref name="visitor" /> returned <see cref="F:PostSharp.Patterns.Model.DescendantVisitorStatus.Stop" />, otherwise <c>true</c>.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.IAggregatableCollection">
+      <summary>
+            Defines the non-generic semantics of an <c>AggregatableCollection</c>.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.IAggregatableCollection.ItemsRelationship">
+      <summary>
+            Gets <see cref="T:PostSharp.Patterns.Model.RelationshipKind" /> of collection items.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.IAggregatableDependentAdvice`1">
+      <summary>
+            Defines the semantics of advices that depend on the aggregatable dynamic advices, i.e. they must
+            be able to react to attachment and detachment events.
+            </summary>
+      <typeparam name="T">Item types.</typeparam>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAggregatableDependentAdvice`1.OnChildAttached(`0,PostSharp.Patterns.DynamicAdvising.AdviceEnumerator{PostSharp.Patterns.Model.IAggregatableDependentAdvice{`0}})">
+      <summary>
+            Method invoked when a child is attached to the parent.
+            </summary>
+      <param name="child"></param>
+      <param name="nextAdvices"></param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAggregatableDependentAdvice`1.OnChildDetached(`0,PostSharp.Patterns.DynamicAdvising.AdviceEnumerator{PostSharp.Patterns.Model.IAggregatableDependentAdvice{`0}})">
+      <summary>
+            Method invoked when a child is detached from the parent.
+            </summary>
+      <param name="child"></param>
+      <param name="nextAdvices"></param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAggregatableDependentAdvice`1.OnParentChanged(PostSharp.Patterns.DynamicAdvising.AdviceEnumerator{PostSharp.Patterns.Model.IAggregatableDependentAdvice{`0}})">
+      <summary>
+            Method invoked when the parent changes.
+            </summary>
+      <param name="nextAdvices"></param>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.IAttachable">
+      <summary>
+            Defines setter methods for the <see cref="T:PostSharp.Patterns.Model.IAggregatable" />.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttachable.AttachToParent(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)">
+      <summary>
+            Attaches the current object to a parent object.
+            </summary>
+      <param name="relationshipInfo">Information about the relationship of the parent node relatively to the current node. 
+            The <see cref="P:PostSharp.Patterns.Model.RelationshipInfo.Relationship" /> property must be set to <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" /> or
+            <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" />.
+            </param>
+      <param name="attacher">A service that allows the current node to attach itself to the parent.</param>
+      <param name="attacherState">An opaque state object to be passed as the first argument to all methods of the <see cref="T:PostSharp.Patterns.Model.IAttacher" /> interface.</param>
+      <returns>
+        <c>true</c> if the current object was not previously attached to any parent, <c>false</c> if it was already attached to the same parent.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttachable.DetachFromParent">
+      <summary>
+            Detaches the current object from its parent object.
+            </summary>
+      <returns>
+        <c>true</c> if the current object has been fully detached, i.e. is no longer attached to its parent by any other relationship, or <c>false</c>
+            if the current object is still attached to the parent by some relationship.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttachable.OnDeserialization(System.Object)">
+      <summary>
+            Restores the correct state when the object is being deserialized.
+            </summary>
+      <param name="caller">Object governing the deserialization.</param>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.IAttacher">
+      <summary>
+            Describes the semantics of a service through which a child <see cref="T:PostSharp.Patterns.Model.IAggregatable" /> object can attach itself to a parent object.
+            This interface is typically implemented by the parent object by composition.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttacher.AttachChild(System.Object,System.Object,PostSharp.Patterns.Model.ChildInfo)">
+      <summary>
+            Attach an object as a child of the current node.
+            </summary>
+      <param name="state">The opaque state object passed to <see cref="M:PostSharp.Patterns.Model.IAttachable.AttachToParent(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)" />.</param>
+      <param name="child">The object that must be attached as a child to the current node.</param>
+      <param name="childInfo">Information about the location (field or collection item, typically) to which the child is assigned and
+            about the relationship of the current node relatively to the parent node. 
+            The <see cref="P:PostSharp.Patterns.Model.RelationshipInfo.Relationship" /> property must be set to <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" /> or <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" /></param>
+      <returns>The new parent of <paramref name="child" />, or <c>null</c> if <paramref name="child" />
+            was already attached to the same parent node through another relationship. If the current node is a parent surrogate, the method
+            returns the parent of the current node. </returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttacher.DetachChild(System.Object,System.Object,PostSharp.Patterns.Model.ChildInfo)">
+      <summary>
+            Detaches an object as a child of the current node.
+            </summary>
+      <param name="state">The opaque state object passed to <see cref="M:PostSharp.Patterns.Model.IAttachable.AttachToParent(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)" />.</param>
+      <param name="child">The object that must be detached as a child as the current node.</param>
+      <param name="childInfo"></param>
+      <returns>The former effective parent of <paramref name="child" />, or <c>null</c> if the child is still attached to
+            the parent through another relationship.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttacher.GetNode(System.Object)">
+      <summary>
+            Gets the underlying object instance which is subject to the current attacher.
+            The instance is the aggregatable node that participates in the parent-child relationships with other objects.
+            </summary>
+      <param name="state">The opaque state object passed to <see cref="M:PostSharp.Patterns.Model.IAttachable.AttachToParent(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)" />.</param>
+      <returns>An object implementing <see cref="T:PostSharp.Patterns.Model.IAggregatable" />, either directly or dynamically.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttacher.OnChildAttached(System.Object,System.Object,System.Object,PostSharp.Patterns.Model.ChildInfo)">
+      <summary>
+            Method invoked after a child has been successfully attached to the current node. 
+            </summary>
+      <param name="state">The opaque state object passed to <see cref="M:PostSharp.Patterns.Model.IAttachable.AttachToParent(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)" />.</param>
+      <param name="parent">The actual parent of <paramref name="child" />. If <paramref name="child" /> is assigned to a parent surrogate,
+                the parameter is set to the actual parent, i.e. to the parent of the parent surrogate.</param>
+      <param name="child">The child object.</param>
+      <param name="childInfo">Information about the location (field or collection item, typically) to which the child is assigned and
+            about the relationship of the current node relatively to the parent node. </param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.IAttacher.OnChildDetached(System.Object,System.Object,System.Object,PostSharp.Patterns.Model.ChildInfo)">
+      <summary>
+            Method invoked when a child has been detached from the current node. 
+            </summary>
+      <param name="state">The opaque state object passed to <see cref="M:PostSharp.Patterns.Model.IAttachable.AttachToParent(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)" />.</param>
+      <param name="parent">The former actual parent of <paramref name="child" />.  If <paramref name="child" /> was assigned to a parent surrogate,
+                the parameter is set to the former actual parent, i.e. to the parent of the parent surrogate.</param>
+      <param name="child">The child object.</param>
+      <param name="childInfo">Information about the location (field or collection item, typically) to which the child was assigned and
+            about the relationship of the current node relatively to the parent node. </param>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.MemberRelationshipAttribute">
+      <summary>
+            Base class for custom attributes that determine the kind of relationship of objects in a graph.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.MemberRelationshipAttribute.CompileTimeValidate(System.Object)">
+      <summary>
+              Method invoked at build time to ensure that the aspect has been applied to
+              the right target.
+            </summary>
+      <param name="target">Target element.</param>
+      <returns>
+        <c>true</c> if the aspect was applied to an acceptable target, otherwise
+              <c>false</c>.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.ParentAttribute">
+      <summary>
+            Custom attribute that, when applied to a field or automatic property, specifies that this field or property
+            should be automatically set to the parent of the instance of the declaring type, whenever this instance
+            is attached as a child to another object.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.ParentAttribute.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>PostSharp.Patterns.Model.ParentAttribute</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.ReferenceAttribute">
+      <summary>
+            Custom attribute that, when applied to a field or automatic property, specifies that this field or property is a simple reference, 
+            and is not involved in a parent-child relationship.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.ReferenceAttribute.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>PostSharp.Patterns.Model.ReferenceAttribute</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.RelationshipInfo">
+      <summary>
+            Describes the relationship between a parent and a child.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.RelationshipInfo.#ctor(PostSharp.Patterns.Model.RelationshipKind,PostSharp.Patterns.Model.RelationshipKind)">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.RelationshipInfo" /> type.
+            </summary>
+      <param name="itemsRelationship">The kind of relationship of items of the child collection relatively to the child collection. </param>
+      <param name="relationship">The kind of relationship of the child relatively to the parent. Valid values are <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" />, <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" />
+            or <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ChildOrParentSurrogate" />.</param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.RelationshipInfo.Equals(PostSharp.Patterns.Model.RelationshipInfo)"></member>
+    <member name="M:PostSharp.Patterns.Model.RelationshipInfo.Equals(System.Object)">
+      <summary>Indicates whether this instance and a specified object are equal.</summary>
+      <param name="obj">The object to compare with the current instance. </param>
+      <returns>
+        <see langword="true" /> if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, <see langword="false" />. </returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.RelationshipInfo.GetHashCode">
+      <summary>Returns the hash code for this instance.</summary>
+      <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.RelationshipInfo.ItemsRelationship">
+      <summary>
+            Gets the kind of relationship of items of the child collection relatively to the child collection. 
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.RelationshipInfo.op_Equality(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.RelationshipInfo)">
+      <summary>
+            Determines whether two instances of the <see cref="T:PostSharp.Patterns.Model.RelationshipInfo" /> type are equal.
+            </summary>
+      <param name="left"></param>
+      <param name="right"></param>
+      <returns></returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.RelationshipInfo.op_Inequality(PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.RelationshipInfo)">
+      <summary>
+            Determines whether two instances of the <see cref="T:PostSharp.Patterns.Model.RelationshipInfo" /> type are equal.
+            </summary>
+      <param name="left"></param>
+      <param name="right"></param>
+      <returns></returns>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.RelationshipInfo.PropagateBehaviors">
+      <summary>
+            Specifies whether behaviors of the parent should be propagated to objects assigned to the field.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.RelationshipInfo.PropagateBehaviorsToItems">
+      <summary>
+            Specifies whether behaviors of the parent should be propagated to objects added to collections assigned to this field.
+            This property is ignored if <see cref="P:PostSharp.Patterns.Model.RelationshipInfo.PropagateBehaviors" /> is <c>false</c>.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.RelationshipInfo.Relationship">
+      <summary>
+            Gets the kind of relationship of the child relatively to the parent. Valid values are <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" />, <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" />
+            or <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ChildOrParentSurrogate" />.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.RelationshipKind">
+      <summary>
+            Enumeration of the kinds of relationship between objects in a object graph.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.None">
+      <summary>
+            No relationship.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.Default">
+      <summary>
+            Means that the relationship kind has not been specified. The typical behavior is a build-time error or warning.
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.Child">
+      <summary>
+            Child (see <see cref="T:PostSharp.Patterns.Model.ChildAttribute" />).
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.Reference">
+      <summary>
+            Reference (see <see cref="T:PostSharp.Patterns.Model.ReferenceAttribute" />).
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate">
+      <summary>
+            Parent surrogate (see <see cref="P:PostSharp.Patterns.Model.ChildAttribute.IsParentSurrogate" />).
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.Parent">
+      <summary>
+            Parent (see <see cref="T:PostSharp.Patterns.Model.ParentAttribute" />).
+            </summary>
+    </member>
+    <member name="F:PostSharp.Patterns.Model.RelationshipKind.ChildOrParentSurrogate">
+      <summary>
+            Either <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" /> or <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" />, depending on the type of the specific object assigned to the field or property.
+            This is the default relationship kind for <see cref="T:PostSharp.Patterns.Model.ChildAttribute" /> when the <see cref="P:PostSharp.Patterns.Model.ChildAttribute.IsParentSurrogate" /> property is not set:
+            it causes the field to be a <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" /> if the object is an <see cref="T:PostSharp.Patterns.Collections.AdvisableCollection`1" /> or an <see cref="T:PostSharp.Patterns.Collections.AdvisableDictionary`2" />,
+            otherwise a <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" />.
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.TypeAdapters.FieldRule">
+      <summary>
+            Exposes a method <see cref="M:PostSharp.Patterns.Model.TypeAdapters.FieldRule.GetRelationshipInfo(System.Reflection.FieldInfo)" /> that allows to mark a field as <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" /> or <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Reference" />
+            programmatically, without custom attribute.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.FieldRule.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>PostSharp.Patterns.Model.TypeAdapters.FieldRule</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.FieldRule.GetRelationshipInfo(System.Reflection.FieldInfo)">
+      <summary>
+            Gets the <see cref="T:PostSharp.Patterns.Model.RelationshipInfo" /> of a given field.
+            </summary>
+      <param name="field">A <see cref="T:System.Reflection.FieldInfo" /> that is not annotated by any <see cref="T:PostSharp.Patterns.Model.MemberRelationshipAttribute" />.</param>
+      <returns>A <see cref="T:PostSharp.Patterns.Model.RelationshipInfo" /> structure for <paramref name="field" />, or <c>null</c> if the current <see cref="T:PostSharp.Patterns.Model.TypeAdapters.FieldRule" /> does not know how to handle <paramref name="field" />.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.TypeAdapters.RegisterFieldRuleAttribute">
+      <summary>
+            Custom attribute that registers a <see cref="T:PostSharp.Patterns.Model.TypeAdapters.FieldRule" />. The custom attribute must be applied to the current project at assembly-level.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.RegisterFieldRuleAttribute.#ctor(System.Type)">
+      <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.TypeAdapters.RegisterFieldRuleAttribute" /> type.
+            </summary>
+      <param name="fieldRuleType">A <see cref="T:System.Type" /> derived from <see cref="T:PostSharp.Patterns.Model.TypeAdapters.FieldRule" />. The type must have a default constructor.</param>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.RegisterFieldRuleAttribute.FieldRuleType">
+      <summary>
+            Gets the <see cref="T:System.Type" /> (derived from <see cref="T:PostSharp.Patterns.Model.TypeAdapters.FieldRule" />).
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.TypeAdapters.RegisterTypeAdapterAttribute">
+      <summary>
+            Custom attribute that registers a <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" />. The custom attribute must be applied to the current project at assembly-level.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.RegisterTypeAdapterAttribute.#ctor(System.String,System.Type)">
+      <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.TypeAdapters.RegisterFieldRuleAttribute" /> and specifies the name of the target type. Use this constructor when the target type is not in the current assembly or in
+            an assembly referenced by the current assembly.
+            </summary>
+      <param name="targetTypeName">The name of the target type (equal to the <see cref="P:System.Type.FullName" /> property of the target <see cref="T:System.Type" />).</param>
+      <param name="typeAdapterFactoryType">A <see cref="T:System.Type" /> derived from <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory" />. The type must have a public default constructor.</param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.RegisterTypeAdapterAttribute.#ctor(System.Type,System.Type)">
+      <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.TypeAdapters.RegisterFieldRuleAttribute" /> and specifies the name of the target type.
+            </summary>
+      <param name="targetType">The target <see cref="T:System.Type" />.</param>
+      <param name="typeAdapterFactoryType">A <see cref="T:System.Type" /> derived from <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory" />. The type must have a public default constructor.</param>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.RegisterTypeAdapterAttribute.TargetTypeName">
+      <summary>
+            Gets the name of the target type.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.RegisterTypeAdapterAttribute.TypeAdapterFactoryType">
+      <summary>
+            Gets the <see cref="T:System.Type" /> (derived from <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory" />).
+            </summary>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter">
+      <summary>
+            Adapter that implements the features otherwise added by <see cref="T:PostSharp.Patterns.Model.AggregatableAttribute" /> to external or third-party types.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.#ctor(System.Boolean)">
+      <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> for no specific type.
+            </summary>
+      <param name="isSealed">
+        <c>true</c> if the <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> represents a type that cannot have derived types (such as a value type or a sealed class), otherwise <c>false</c>.</param>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.#ctor(System.Type)">
+      <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> for a specific <see cref="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AdaptedType" />.
+            </summary>
+      <param name="type">The <see cref="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AdaptedType" /> being adapted.</param>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AdaptedType">
+      <summary>
+            Gets the <see cref="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AdaptedType" /> adapted by the current <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" />, or <c>null</c> if the current <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> is not specific to any <see cref="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AdaptedType" />.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AttachChild(System.Object,PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)">
+      <summary>
+            Attaches an item to a parent. This method is typically invoked by implementations of <see cref="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AttachToParent(System.Object,PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)" /> to attach items or children to the parent.
+            </summary>
+      <param name="item">The object to attach.</param>
+      <param name="relationshipInfo">Relationship of <paramref name="item" /> with respect to the object represented by <paramref name="attacher" /> and <paramref name="attacherState" />.</param>
+      <param name="attacher">An interface that represents to parent's ability to attach children.</param>
+      <param name="attacherState">An opaque state object to be passed to <paramref name="attacher" />.</param>
+      <returns>
+        <c>true</c> if the current object was not previously attached to any parent, <c>false</c> if it was already attached to the same parent.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.AttachToParent(System.Object,PostSharp.Patterns.Model.RelationshipInfo,PostSharp.Patterns.Model.IAttacher,System.Object)">
+      <summary>
+            Attaches an object to a parent object.
+            </summary>
+      <param name="obj">An instance of the adapted type.</param>
+      <param name="relationshipInfo">Information about the relationship of the parent node relatively to the current node. 
+            The <see cref="P:PostSharp.Patterns.Model.RelationshipInfo.Relationship" /> property must be set to <see cref="F:PostSharp.Patterns.Model.RelationshipKind.Child" /> or
+            <see cref="F:PostSharp.Patterns.Model.RelationshipKind.ParentSurrogate" />.
+            </param>
+      <param name="attacher">A service that allows the current node to attach itself to the parent.</param>
+      <param name="attacherState">An opaque state object to be passed as the first argument to all methods of the <see cref="T:PostSharp.Patterns.Model.IAttacher" /> interface.</param>
+      <returns>
+        <c>true</c> if the current object was not previously attached to any parent, <c>false</c> if it was already attached to the same parent.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.DetachChild(System.Object,System.Object,PostSharp.Patterns.Model.RelationshipInfo)">
+      <summary>
+            Detaches an item from its parent. This method is typically invoked by implementations of <see cref="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.DetachFromParent(System.Object,System.Object,PostSharp.Patterns.Model.RelationshipInfo)" /> to detach items or children from the parent.
+            </summary>
+      <param name="item">The object to detach.</param>
+      <param name="itemParent">Parent from which <paramref name="item" /> is detached.</param>
+      <param name="relationshipInfo">Relationship of <paramref name="item" /> with respect to <paramref name="itemParent" />.</param>
+      <returns>
+        <c>true</c> if the current object has been fully detached, i.e. is no longer attached to its parent by any other relationship, or <c>false</c>
+            if the current object is still attached to the parent by some relationship.</returns>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.DetachFromParent(System.Object,System.Object,PostSharp.Patterns.Model.RelationshipInfo)">
+      <summary>
+            Detaches an object from its parent object.
+            </summary>
+      <param name="obj">An instance of the adapted type.</param>
+      <param name="parent">The object from which <paramref name="obj" /> is detached.</param>
+      <param name="relationshipInfo">Relationship of <paramref name="obj" /> with respect to <paramref name="parent" />.</param>
+      <returns>
+        <c>true</c> if the current object has been fully detached, i.e. is no longer attached to its parent by any other relationship, or <c>false</c>
+            if the current object is still attached to the parent by some relationship.</returns>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.EligibleRelationshipKind">
+      <summary>
+            Determines which kind of relationships the adapted type can enter with respect to the parent object.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.IsAnyInstanceImmutable">
+      <summary>
+            Determines whether any instance of this type or of any derived class is immutable.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.IsAnyInstanceThreadSafe">
+      <summary>
+            Determines whether any instance of this type or of any derived class can be safely shared by several threads.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.IsImmutable">
+      <summary>
+            Determines whether the adapted type is immutable. 
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.IsThreadSafe">
+      <summary>
+            Determines whether instances of this type can be safely shared by several threads.
+            </summary>
+    </member>
+    <member name="P:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.ObjectReferenceTypes">
+      <summary>
+            Gets a list of all types referenced from the adapted type.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter.VisitChildren(System.Object,PostSharp.Patterns.Model.ChildVisitor,PostSharp.Patterns.Model.ChildVisitorOptions,System.Object)">
+      <summary>
+            Visit children or collection items.
+            </summary>
+      <param name="obj">An instance of the adapted type.</param>
+      <param name="visitor">Visitor.</param>
+      <param name="options">Options.</param>
+      <param name="state">State to be passed to <paramref name="visitor" />.</param>
+      <returns>
+        <c>false</c> if <paramref name="visitor" /> returned <see cref="F:PostSharp.Patterns.Model.DescendantVisitorStatus.Stop" />, otherwise <c>true</c>.</returns>
+    </member>
+    <member name="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory">
+      <summary>
+            Factory class for the <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> type. Implementations must have a public default constructor.
+            </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:PostSharp.Patterns.Model.TypeAdapters.TypeAdapterFactory.CreateTypeAdapter(System.Type)">
+      <summary>
+            Creates a <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> for a specific <see cref="T:System.Type" />.
+            </summary>
+      <param name="type">The target <see cref="T:System.Type" /> for which the <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> should be created.</param>
+      <returns>A <see cref="T:PostSharp.Patterns.Model.TypeAdapters.TypeAdapter" /> for <paramref name="type" />.</returns>
+    </member>
+  </members>
+</doc>
