@@ -29,3 +29,5 @@ C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.pdb
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\PostSharp\postsharp.app.config
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.csproj.ResolveComReference.cache
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\Interop.EnvDTE.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\Interop.VSLangProj.dll

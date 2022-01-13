@@ -5,83 +5,169 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SAP_Import"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        >
+        Title="MainWindow" Height="540" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+         WindowStyle="None"
+        WindowState="Normal"
+        Background="#FFFFFFFF"
+        
+        BorderBrush="Transparent"
+        AllowsTransparency="True"
+        RenderOptions.BitmapScalingMode="Fant"
+        RenderOptions.EdgeMode="Unspecified"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="ClearType">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30*"/>
             <RowDefinition Height="30*"/>
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="3*"/>
+
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
 
         
-            
         
+        <Border Grid.Column="7" 
+                Grid.RowSpan="3"
+                BorderThickness="2"
+                BorderBrush="#FFCCCCCC"
+                Background="#FFEEEEEE">
+            <DockPanel Margin="2">
+                <TextBlock DockPanel.Dock="Top" Text="Output" FontSize="18" FontWeight="Bold" Margin="0,0,0,0"/>
+            
+                <ScrollViewer DockPanel.Dock="Bottom" Background="Transparent" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel x:Name="ConsoleWindow">
+                        <!--<TextBlock DockPanel.Dock="Top" Text="Output" FontSize="12" FontWeight="Regular"/>-->
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+
         <Border x:Name="DragBlock" 
                 Grid.Row="1" 
                 Grid.Column="1" 
+                Grid.ColumnSpan="2"
                 DragLeave="DragBlock_DragLeave" 
                 DragOver="DragBlock_DragOver" 
                 Drop="DragBlock_Drop"
                 AllowDrop="True"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Background="#EEC8C8C8"
+                BorderBrush="#FF696969"
+                BorderThickness="2"
+                Background="#99E9E9E9"
                 CornerRadius="10"
                 >
             <TextBlock x:Name="Filename"
                        Margin="10"
+                       FontSize="16"
                        TextWrapping="Wrap"
                        VerticalAlignment="Center" 
-                       HorizontalAlignment="Center">
-                Drag .XLSX   File
+                       HorizontalAlignment="Center"
+                       Foreground="#FF696969" 
+                       TextOptions.TextFormattingMode="Ideal" 
+                       RenderOptions.EdgeMode="Unspecified"
+                       RenderOptions.BitmapScalingMode="Fant"
+                       TextOptions.TextRenderingMode="ClearType">
+                Drag .XLSX File
             </TextBlock>
+
+            <Border.Effect >
+                <DropShadowEffect BlurRadius="30" ShadowDepth="20" Opacity="0.2" Direction="250"/>
+            </Border.Effect>
         </Border>
 
-        <Border Grid.Column="2" 
-                Grid.Row="2"
-                Margin="20,50,20,50"
-                CornerRadius="5"
+        <Border x:Name="Convert_Back"
+                IsEnabled="False"
+                Grid.Column="3" 
+                Grid.Row="1"
+                Margin="20,60,20,60"
+                CornerRadius="3"
                 Background="LightBlue"
-                BorderBrush="Black"
-                BorderThickness="1">
-            <Button IsEnabled="False" x:Name="Convert" Background="Transparent" Margin="5" BorderThickness="0" Click="Convert_Click">
-                Convert File
+                BorderBrush="#FF696969"
+                BorderThickness="1"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                RenderOptions.EdgeMode="Unspecified">
+            <Button x:Name="Convert" 
+                    Background="Transparent" 
+                    Margin="1" 
+                    BorderThickness="0" 
+                    Click="Convert_Click" 
+                    TextOptions.TextFormattingMode="Ideal" 
+                    RenderOptions.EdgeMode="Unspecified"
+                    RenderOptions.BitmapScalingMode="Fant"
+                    TextOptions.TextRenderingMode="ClearType"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    >
+
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock FontFamily="Segeo UI" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        Convert
+                    </TextBlock>
+                    
+                    <ProgressBar Visibility="Hidden" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" x:Name="ProgressBar" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5">
+
+                    </ProgressBar>
+
+                    
+                </Grid>
             </Button>
+
+
+            <Border.Effect >
+                <DropShadowEffect BlurRadius="30" ShadowDepth="20" Opacity="0.2" Direction="270"/>
+            </Border.Effect>
         </Border>
 
         <Border x:Name="OutBlock" 
                 Grid.Row="1" 
-                Grid.Column="3" 
+                Grid.Column="4"
+                Grid.ColumnSpan="2"
                 DragLeave="DragBlock_DragLeave" 
                 DragOver="DragBlock_DragOver" 
                 Drop="DragBlock_Drop"
                 AllowDrop="True"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Background="#FFC8C8C8"
-                CornerRadius="10">
-            <TextBlock x:Name="Files"
+                BorderBrush="#FF696969"
+                BorderThickness="2"
+                Background="#99E9E9E9"
+                CornerRadius="10"
+                TextOptions.TextFormattingMode="Ideal" 
+                       RenderOptions.EdgeMode="Unspecified"
+                       RenderOptions.BitmapScalingMode="Fant"
+                       TextOptions.TextRenderingMode="ClearType">
+            <TextBlock x:Name="Status"
                        Margin="10"
+                       FontSize="16"
                        TextWrapping="Wrap"
                        VerticalAlignment="Center" 
-                       HorizontalAlignment="Center">
-                Status of Conversion
+                       HorizontalAlignment="Center"
+                       Foreground="#FF696969"
+                       TextOptions.TextFormattingMode="Ideal" 
+                       TextOptions.TextRenderingMode="ClearType">
+                Status
             </TextBlock>
+
+            <Border.Effect >
+                <DropShadowEffect BlurRadius="30" ShadowDepth="20" Opacity="0.2" Direction="290"/>
+            </Border.Effect>
         </Border>
 
-        <ProgressBar x:Name="ProgressBar" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5">
 
-        </ProgressBar>
+
 
     </Grid>
 </Window>
