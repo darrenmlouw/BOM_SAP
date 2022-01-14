@@ -80,7 +80,7 @@ namespace SAP_Import
         {
             //excel.Workbooks.Close();
             //wb.Close(true, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
-            this.excel.Quit();
+            //this.excel.Quit();
 
             Marshal.ReleaseComObject(this.ws);
             Marshal.ReleaseComObject(this.wb);
@@ -267,11 +267,12 @@ namespace SAP_Import
             print("Begnning Conversion:", 12, "bold");
             print("line", 0, "");
 
-            //CreateBOMs();
+            Create_BOMs();
+            Create_BOM_Items();
         }
 
         [Background]
-        private void CreateBOMs()
+        private void Create_BOMs()
         {
             Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
 
@@ -289,12 +290,26 @@ namespace SAP_Import
             //xlWorkBook.Worksheets.Add
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-            xlWorkSheet.Cells[1, 1] = "ID";
-            xlWorkSheet.Cells[1, 2] = "Name";
-            xlWorkSheet.Cells[2, 1] = "1";
-            xlWorkSheet.Cells[2, 2] = "One";
-            xlWorkSheet.Cells[3, 1] = "2";
-            xlWorkSheet.Cells[3, 2] = "Two";
+            xlWorkSheet.Cells[1, 1] = "BOM_ItemCode";
+            xlWorkSheet.Cells[1, 2] = "Revision";
+            xlWorkSheet.Cells[1, 3] = "Quantity";
+            xlWorkSheet.Cells[1, 4] = "Factor";
+            xlWorkSheet.Cells[1, 5] = "Yield";
+            xlWorkSheet.Cells[1, 6] = "YieldFormula";
+            xlWorkSheet.Cells[1, 7] = "YieldItemsFormula";
+            xlWorkSheet.Cells[1, 8] = "YieldCoproductsFormula";
+            xlWorkSheet.Cells[1, 9] = "YieldScrapsFormula";
+            xlWorkSheet.Cells[1, 10] = "Warehouse";
+            xlWorkSheet.Cells[1, 11] = "DistRule";
+            xlWorkSheet.Cells[1, 12] = "DistRule2";
+            xlWorkSheet.Cells[1, 13] = "DistRule3";
+            xlWorkSheet.Cells[1, 14] = "DistRule4";
+            xlWorkSheet.Cells[1, 15] = "DistRule5";
+            xlWorkSheet.Cells[1, 16] = "Project";
+            xlWorkSheet.Cells[1, 17] = "BatchSize";
+            xlWorkSheet.Cells[1, 18] = "ProdType";
+            xlWorkSheet.Cells[1, 19] = "Instructions";
+
 
             string savePath = "";
 
@@ -314,14 +329,98 @@ namespace SAP_Import
             //txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
             //savePath = Path.Get
 
-            string temp = savePath.Replace(ImportExcelFile.filename, "BOMS.csv");
+            string temp = savePath.Replace(ImportExcelFile.filename, "BOMs.csv");
 
             Console.WriteLine(temp);
-            print(temp, 14, "");
+            print(temp, 10, "");
+            print("line", 0, "");
 
             try
             {
                 xlWorkBook.SaveAs(temp);
+            }
+            catch
+            {
+
+            }
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
+
+            Marshal.ReleaseComObject(xlWorkSheet);
+            Marshal.ReleaseComObject(xlWorkBook);
+            Marshal.ReleaseComObject(xlApp);
+        }
+
+        [Background]
+        private void Create_BOM_Items()
+        {
+            Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            if (xlApp == null)
+            {
+                MessageBox.Show("Excel is not properly installed!!");
+            }
+
+
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+            //xlWorkBook.Worksheets.Add
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+
+            xlWorkSheet.Cells[1, 1] = "BOM_ItemCode";
+            xlWorkSheet.Cells[1, 2] = "Revision";
+            xlWorkSheet.Cells[1, 3] = "Sequence";
+            xlWorkSheet.Cells[1, 4] = "ItemCode";
+            xlWorkSheet.Cells[1, 5] = "Item_Revision";
+            xlWorkSheet.Cells[1, 6] = "Warehouse";
+            xlWorkSheet.Cells[1, 7] = "Factor";
+            xlWorkSheet.Cells[1, 8] = "FactorDesc";
+            xlWorkSheet.Cells[1, 9] = "Quantity";
+            xlWorkSheet.Cells[1, 10] = "ScrapPercent";
+            xlWorkSheet.Cells[1, 11] = "Yield";
+            xlWorkSheet.Cells[1, 12] = "IssueType";
+            xlWorkSheet.Cells[1, 13] = "OcrCode";
+            xlWorkSheet.Cells[1, 14] = "OcrCode2";
+            xlWorkSheet.Cells[1, 15] = "OcrCode3";
+            xlWorkSheet.Cells[1, 16] = "OcrCode4";
+            xlWorkSheet.Cells[1, 17] = "OcrCode5";
+            xlWorkSheet.Cells[1, 18] = "Project";
+            xlWorkSheet.Cells[1, 19] = "SubcontractingItem";
+            xlWorkSheet.Cells[1, 20] = "Remarks";
+            xlWorkSheet.Cells[1, 21] = "Formula";
+
+
+
+            string savePath = "";
+
+            savePath = ImportExcelFile.path;
+
+            // Keep This Code To Select Folder To Save IN
+            //Dispatcher.Invoke((Action)(() =>
+            //{
+            //    forms.FolderBrowserDialog openFileDialog = new forms.FolderBrowserDialog();
+
+            //    if (openFileDialog.ShowDialog() == forms.DialogResult.OK)
+            //    {
+            //        savePath = openFileDialog.SelectedPath;
+            //    }
+            //}));
+
+            //txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
+            //savePath = Path.Get
+
+            string temp = savePath.Replace(ImportExcelFile.filename, "BOM_Items.csv");
+
+            Console.WriteLine(temp);
+            print(temp, 10, "");
+            print("line", 0, "");
+
+            try
+            {
+                xlWorkBook.SaveAs(temp, Excel.XlFileFormat.xlCSVWindows, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlLocalSessionChanges, true, System.Reflection.Missing.Value, Excel.XlTextVisualLayoutType.xlTextVisualRTL, true);
             }
             catch
             {
@@ -345,6 +444,7 @@ namespace SAP_Import
                 line.Background = new System.Windows.Media.SolidColorBrush(Color.FromRgb(150, 150, 150));
                 line.Margin = new Thickness(0, 1, 0, 1);
                 line.CornerRadius = new CornerRadius(0);
+                
 
                 ConsoleWindow.Children.Add(line);
             }
@@ -354,6 +454,7 @@ namespace SAP_Import
                 TextBlock tb = new TextBlock();
                 tb.Text = text;
                 tb.FontSize = size;
+                tb.TextWrapping = TextWrapping.Wrap; 
                 if (weight == "bold")
                 {
                     tb.FontWeight = FontWeights.Bold;
