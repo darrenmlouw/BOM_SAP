@@ -75,13 +75,6 @@ namespace SAP_Import
 
         public void Release()
         {
-            //excel.Workbooks.Close();
-            //wb.Close(true, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
-            //this.excel.Quit();
-
-            //this.wb.Close(true, null, null);
-            //this.excel.Quit();
-
             Marshal.ReleaseComObject(this.ws);
             Marshal.ReleaseComObject(this.wb);
             Marshal.ReleaseComObject(this.excel);
@@ -101,7 +94,6 @@ namespace SAP_Import
         }
     }
 
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -110,18 +102,31 @@ namespace SAP_Import
         ExcelRead ImportExcelFile;
         string path = "";
         string filename = "";
-
         bool hasFile = false;
+        bool isPos;
+        bool isConverted;
+        string name = "";
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
+
+
         private void DragBlock_DragOver(object sender, DragEventArgs e)
         {
             DragBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 200, 200, 255));
         }
+
 
         private void DragBlock_DragLeave(object sender, DragEventArgs e)
         {
@@ -156,6 +161,7 @@ namespace SAP_Import
                         ConsoleWindow.Children.Clear();
 
                         DragBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 200, 255, 200));
+                        OutBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 233, 233, 233));
                         Filename.Text = filename;
                     }));
 
@@ -172,6 +178,7 @@ namespace SAP_Import
                     {
                         ConsoleWindow.Children.Clear();
                         DragBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 255, 200, 200));
+                        OutBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 233, 233, 233));
                         Filename.Text = "Drag .XLSX File";
 
                         
@@ -190,11 +197,18 @@ namespace SAP_Import
             ProgressEnd();
         }
 
-
         [Background]
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
-            if (hasFile == true)
+            name = "";
+            Dispatcher.Invoke((Action)(() =>
+            {
+                name = BomName.Text;
+            }));
+
+            Console.WriteLine(name);
+
+            if (hasFile == true && name != "")
             {
                 ImportExcelFile = new ExcelRead(path, 1, filename);
 
@@ -210,11 +224,11 @@ namespace SAP_Import
                 Console.WriteLine("------------------------------------------------------------");
 
 
-                bool isConverted;
+                isConverted = false;
                 try
                 {
                     ConvertBOM();
-                    isConverted = true;
+                    
                 }
                 catch
                 {
@@ -234,11 +248,13 @@ namespace SAP_Import
                     if (isConverted == true)
                     {
                         Status.Text = "Success";
+                        DragBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 233, 233, 233));
                         OutBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 200, 255, 200));
                     }
                     else
                     {
                         Status.Text = "Failed";
+                        DragBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 233, 233, 233));
                         OutBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 255, 200, 200));
                     }
                 }));
@@ -247,22 +263,61 @@ namespace SAP_Import
             }
             else
             {
-                MessageBox.Show("No File Selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("No File Selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                if(name == "")
+                {
+                    
+                        printColor("Please Enter BOM Name", 12, "bold", 255, 100, 100);
+                    
+                }
             }
         }
 
         //[Background]
         private void ConvertBOM()
         {
-            print("Begnning Conversion:", 12, "bold");
-            print("line", 0, "");
+           
 
-            Create_BOMs();
-            Create_BOM_Items();
-            Create_BOM_Scraps();
-            Create_BOM_Coproducts();
-            Create_OITM();
-            Create_OITW();
+            isPos = false;
+            CountPOS();
+
+            if (isPos == true)
+            {
+                printColor("Correct Header Found", 12, "", 100, 155, 100);
+
+                print("Begnning Conversion:", 12, "bold");
+                print("line", 0, "");
+
+                try
+                {
+                    Create_BOMs();
+                    Create_BOM_Items();
+                    Create_BOM_Scraps();
+                    Create_BOM_Coproducts();
+                    Create_OITM();
+                    Create_OITW();
+                    isConverted = true;
+                }
+                catch
+                {
+                    isConverted = false;
+                }
+                
+            }
+            else
+            {
+                printColor("Unable to Find the Correct Headers", 12, "bold", 255, 100, 100);
+            }
+        }
+
+        private void CountPOS()
+        {
+            if(ImportExcelFile.ReadCell(0, 0) == "POS")
+            {
+                isPos = true;
+            }
+
         }
 
         //[Background]
@@ -284,6 +339,7 @@ namespace SAP_Import
             //xlWorkBook.Worksheets.Add
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
+            // Headers
             xlWorkSheet.Cells[1, 1] = "BOM_ItemCode";
             xlWorkSheet.Cells[1, 2] = "Revision";
             xlWorkSheet.Cells[1, 3] = "Quantity";
@@ -304,6 +360,49 @@ namespace SAP_Import
             xlWorkSheet.Cells[1, 18] = "ProdType";
             xlWorkSheet.Cells[1, 19] = "Instructions";
 
+            //BOM_ItemCode
+            xlWorkSheet.Cells[2, 1] = name;
+            xlWorkSheet.Cells[3, 1] = name + "S-MAT";
+
+            // Revision
+            xlWorkSheet.Cells[2, 2] = "'00";
+            xlWorkSheet.Cells[3, 2] = "'00";
+            //xlWorkSheet.Cells[4, 2] = "'00";
+
+            // Quantity
+            xlWorkSheet.Cells[2, 3] = "1";
+            xlWorkSheet.Cells[3, 3] = "1";
+            //xlWorkSheet.Cells[4, 3] = "1";
+
+            // Factor
+            xlWorkSheet.Cells[2, 4] = "1";
+            xlWorkSheet.Cells[3, 4] = "1";
+            //xlWorkSheet.Cells[4, 4] = "1";
+
+            // Yield
+            xlWorkSheet.Cells[2, 5] = "100";
+            xlWorkSheet.Cells[3, 5] = "100";
+            //xlWorkSheet.Cells[4, 5] = "100";
+
+            //Warehouse
+            xlWorkSheet.Cells[2, 10] = "FG";
+            xlWorkSheet.Cells[3, 10] = "FG";
+            //xlWorkSheet.Cells[4, 10] = "FG";
+
+            //BatchSize
+            xlWorkSheet.Cells[2, 17] = "1";
+            xlWorkSheet.Cells[3, 17] = "1";
+            //xlWorkSheet.Cells[4, 17] = "1";
+
+            xlWorkSheet.Cells[2, 18] = "I";
+            xlWorkSheet.Cells[3, 18] = "I";
+            //xlWorkSheet.Cells[4, 18] = "I";
+
+
+
+
+
+
             string savePath = "";
 
             savePath = ImportExcelFile.path;
@@ -320,7 +419,7 @@ namespace SAP_Import
             }
             catch
             {
-
+                MessageBox.Show("Unable to Save File");
             }
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
@@ -329,6 +428,7 @@ namespace SAP_Import
             Marshal.ReleaseComObject(xlWorkBook);
             Marshal.ReleaseComObject(xlApp);
         }
+
 
         private void Create_BOM_Items()
         {
@@ -370,20 +470,30 @@ namespace SAP_Import
             xlWorkSheet.Cells[1, 20] = "Remarks";
             xlWorkSheet.Cells[1, 21] = "Formula";
 
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            int THTCount = 0;
+            int SMTCount = 0;
+
+            //for (int i = 0; i < ImportExcelFile.rows; i++)
+            //{
+
+            //    xlWorkSheet.Cells[i, 1] = "";
+            //}
 
 
             ///Data Section
             // 1
-            // Blank
+            // ItemCode
 
             // 2
             writeData(xlWorkSheet, 2, "'00",0);
 
             // 3
-            // Blank
+            // Sequence
 
             //4
-            copyData(xlWorkSheet, 2, "CPN", 4, "", 0);
+            copyData(xlWorkSheet, 1, "IPN", 4, "", 0);
             
             // 5
             writeData(xlWorkSheet, 5, "'00", 0);
@@ -398,7 +508,7 @@ namespace SAP_Import
             // Blank
 
             // 9
-            copyData(xlWorkSheet, 5, "Quantity", 9, "", 0);
+            copyData(xlWorkSheet, 3, "Quantity", 9, "", 0);
 
             // 10
             writeData(xlWorkSheet, 10, "0", 0);
@@ -416,7 +526,7 @@ namespace SAP_Import
             writeData(xlWorkSheet, 19, "N", 0);
 
             // 20
-            copyData(xlWorkSheet, 6, "RefDes", 20, "", 0);
+            copyData(xlWorkSheet, 4, "RefDes", 20, "", 0);
 
             ///End Data Section
 
@@ -461,6 +571,7 @@ namespace SAP_Import
             Marshal.ReleaseComObject(xlApp);
         }
 
+
         private void Create_BOM_Scraps()
         {
             Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
@@ -502,51 +613,7 @@ namespace SAP_Import
 
 
 
-            /////Data Section
-            //// 1
-            //// Blank
-
-            //// 2
-            //writeData(xlWorkSheet, 2, "'00");
-
-            //// 3
-            //// Blank
-
-            ////4
-            //copyData(xlWorkSheet, 2, "CPN", 4, "");
-
-            //// 5
-            //writeData(xlWorkSheet, 5, "'00");
-
-            //// 6
-            //writeData(xlWorkSheet, 6, "WIP");
-
-            //// 7
-            //writeData(xlWorkSheet, 7, "0");
-
-            //// 8
-            //// Blank
-
-            //// 9
-            //copyData(xlWorkSheet, 5, "Quantity", 9, "");
-
-            //// 10
-            //writeData(xlWorkSheet, 10, "0");
-
-            //// 11
-            //writeData(xlWorkSheet, 11, "100");
-
-            //// 12
-            //writeData(xlWorkSheet, 12, "M");
-
-            //// 13-18
-            //// Blank
-
-            //// 19
-            //writeData(xlWorkSheet, 19, "N");
-
-            //// 20
-            //copyData(xlWorkSheet, 6, "RefDes", 20, "");
+            ///Data Section
 
             ///End Data Section
 
@@ -554,20 +621,6 @@ namespace SAP_Import
             string savePath = "";
 
             savePath = ImportExcelFile.path;
-
-            // Keep This Code To Select Folder To Save IN
-            //Dispatcher.Invoke((Action)(() =>
-            //{
-            //    forms.FolderBrowserDialog openFileDialog = new forms.FolderBrowserDialog();
-
-            //    if (openFileDialog.ShowDialog() == forms.DialogResult.OK)
-            //    {
-            //        savePath = openFileDialog.SelectedPath;
-            //    }
-            //}));
-
-            //txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
-            //savePath = Path.Get
 
             string temp = savePath.Replace(ImportExcelFile.filename, "BOM_Scraps.csv");
 
@@ -590,6 +643,7 @@ namespace SAP_Import
             Marshal.ReleaseComObject(xlWorkBook);
             Marshal.ReleaseComObject(xlApp);
         }
+
 
         private void Create_BOM_Coproducts()
         {
@@ -619,7 +673,6 @@ namespace SAP_Import
             xlWorkSheet.Cells[1, 8] = "FactorDesc";
             xlWorkSheet.Cells[1, 9] = "Quantity";
             xlWorkSheet.Cells[1, 10] = "Yield";
-            //xlWorkSheet.Cells[1, 11] = "Type";
             xlWorkSheet.Cells[1, 11] = "IssueType";
             xlWorkSheet.Cells[1, 12] = "OcrCode";
             xlWorkSheet.Cells[1, 13] = "OcrCode2";
@@ -660,6 +713,7 @@ namespace SAP_Import
             Marshal.ReleaseComObject(xlApp);
         }
 
+
         private void Create_OITM()
         {
             Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
@@ -696,8 +750,8 @@ namespace SAP_Import
             }
 
 
-            copyData(xlWorkSheet, 2, "CPN", 1, "", 1);
-            copyData(xlWorkSheet, 3, "Description", 2, "", 1);
+            copyData(xlWorkSheet, 1, "IPN", 1, "", 1);
+            copyData(xlWorkSheet, 5, "Description", 2, "", 1);
             //supplierCatalogNo
             //copyData(xlWorkSheet, 3, "Description", 2, "", 1);
             writeData(xlWorkSheet, 29, "N", 1);
@@ -734,6 +788,7 @@ namespace SAP_Import
             Marshal.ReleaseComObject(xlWorkBook);
             Marshal.ReleaseComObject(xlApp);
         }
+
 
         private void Create_OITW()
         {
@@ -775,7 +830,7 @@ namespace SAP_Import
             int startPoint = 0;
             for (int i = 0; i < ImportExcelFile.rows; i++)
             {
-                if (ImportExcelFile.ReadCell(i, 2) == "CPN")
+                if (ImportExcelFile.ReadCell(i, 2) == "IPN")
                 {
                     startPoint = i;
                     break;
@@ -812,9 +867,9 @@ namespace SAP_Import
 
                     //xlWorkSheet.Cells[i + 1 + 2, 0] = ImportExcelFile.ReadCell(i + startPoint + 1, 2).Replace(';', ':');
 
-                    if (ImportExcelFile.ReadCell(j + startPoint + 1, 2).Replace(';', ':') != "")
+                    if (ImportExcelFile.ReadCell(j + startPoint + 1, 1).Replace(';', ':') != "")
                     {
-                        xlWorkSheet.Cells[count + 1+2, 1] = ImportExcelFile.ReadCell(j + startPoint + 1, 2).Replace(';', ':');
+                        xlWorkSheet.Cells[count + 1+2, 1] = ImportExcelFile.ReadCell(j + startPoint + 1, 1).Replace(';', ':');
                         xlWorkSheet.Cells[count + 1+2, 23] = whs;
                         count++;
 
@@ -865,9 +920,13 @@ namespace SAP_Import
 
             for (int i = startPoint; i < ImportExcelFile.rows; i++)
             {
-                ws.Cells[i-startPoint + startRow + 2, newCol] = data;
+                if (ImportExcelFile.ReadCell(i + startPoint + 1, 0).Replace(';', ':') != "")
+                {
+                    ws.Cells[i - startPoint + startRow + 2, newCol] = data;
+                }
             }
         }
+
 
         private void copyData(Excel.Worksheet ws, int oldCol, string oldName, int newCol, string newName, int startRow)
         {
@@ -932,6 +991,29 @@ namespace SAP_Import
 
                 ConsoleWindow.Children.Add(tb);
             }
+        }
+
+        [Dispatched]
+        private void printColor(string text, double size, string weight, int red, int green, int blue)
+        {
+            TextBlock tb = new TextBlock();
+            tb.Text = text;
+            Byte r = ((byte)red);
+            Byte g = ((byte)green);
+            Byte b = ((byte)blue);
+            tb.Foreground = new System.Windows.Media.SolidColorBrush(Color.FromRgb(r, g, b));
+            tb.FontSize = size;
+            tb.TextWrapping = TextWrapping.Wrap;
+            if (weight == "bold")
+            {
+                tb.FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                tb.FontWeight = FontWeights.Regular;
+            }
+
+            ConsoleWindow.Children.Add(tb);
         }
 
         // Begin Progress Bar Loading Animation

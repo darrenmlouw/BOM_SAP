@@ -1,0 +1,16 @@
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\bin\Debug\net6.0\BOM_Connector_Macro.exe
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\bin\Debug\net6.0\BOM_Connector_Macro.deps.json
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\bin\Debug\net6.0\BOM_Connector_Macro.runtimeconfig.json
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\bin\Debug\net6.0\BOM_Connector_Macro.dll
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\bin\Debug\net6.0\ref\BOM_Connector_Macro.dll
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\bin\Debug\net6.0\BOM_Connector_Macro.pdb
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.csproj.AssemblyReference.cache
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.AssemblyInfoInputs.cache
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.AssemblyInfo.cs
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.csproj.CoreCompileInputs.cache
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.dll
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\ref\BOM_Connector_Macro.dll
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.pdb
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.genruntimeconfig.cache
+C:\Users\Darren\source\repos\BOM_SAP\BOM_Connector_Macro\BOM_Connector_Macro\obj\Debug\net6.0\BOM_Connector_Macro.csproj.ResolveComReference.cache

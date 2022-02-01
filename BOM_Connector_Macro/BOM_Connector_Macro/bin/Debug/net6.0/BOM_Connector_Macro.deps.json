@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "BOM_Connector_Macro/1.0.0": {
+        "runtime": {
+          "BOM_Connector_Macro.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BOM_Connector_Macro/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
