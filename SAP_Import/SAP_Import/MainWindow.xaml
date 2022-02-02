@@ -25,6 +25,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
                 <RowDefinition Height="500*"/>
                 <RowDefinition Height="50"/>
 
@@ -44,6 +45,7 @@
 
             <Border Margin="0,0,0,20" Background="#FFFFFFFF" 
                     Grid.Column="1" 
+                    Grid.RowSpan="2"
                     Grid.ColumnSpan="5" 
                     Grid.Row="1" 
                     CornerRadius="5" 
@@ -58,6 +60,12 @@
                         <ColumnDefinition Width="80*"/>
                     </Grid.ColumnDefinitions>
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
                     <TextBlock Grid.Column="0" 
                          Margin="4" 
                          Background="Transparent" 
@@ -65,27 +73,59 @@
                          VerticalAlignment="Center" 
                          Foreground="#FFAAAAAA"
                          FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
-                         >
+                         x:Name="Name">
                         NAME
                     </TextBlock>
 
-                    <Border Grid.Column="1" Background="#FFC8C8C8">
+                    <TextBlock Grid.Column="0" 
+                               Grid.Row="2"
+                                 Margin="4" 
+                                 Background="Transparent" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Foreground="#FFAAAAAA"
+                                 FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
+                                 >
+                        WHS
+                    </TextBlock>
+
+                    <Border Grid.Column="1" Grid.RowSpan="3" Background="#FFC8C8C8">
                         
                     </Border>
 
+                    <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Background="#FFC8C8C8">
+
+                    </Border>
+
                     <TextBox x:Name="BomName" 
-                         Grid.Column="2" 
-                         Margin="30,0,30,0" 
-                         Background="Transparent" 
-                         BorderThickness="0" 
-                         HorizontalAlignment="Stretch" 
-                         VerticalAlignment="Stretch" 
-                         HorizontalContentAlignment="Center" 
-                         VerticalContentAlignment="Center" 
-                         Foreground="#FFAAAAAA"
-                         FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
-                         >
+                             Grid.Column="2" 
+                             Margin="30,0,30,0" 
+                             Background="Transparent" 
+                             BorderThickness="0" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
+                             HorizontalContentAlignment="Center" 
+                             VerticalContentAlignment="Center" 
+                             Foreground="#FFAAAAAA"
+                             FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
+                             CharacterCasing="Upper">
                         
+                    </TextBox>
+
+                    <TextBox x:Name="Warehouse" 
+                             Grid.Column="2" 
+                             Grid.Row="3"
+                             Margin="30,0,30,0" 
+                             Background="Transparent" 
+                             BorderThickness="0" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
+                             HorizontalContentAlignment="Center" 
+                             VerticalContentAlignment="Center" 
+                             Foreground="#FFAAAAAA"
+                             FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
+                             MaxLength="3"
+                             CharacterCasing="Upper">
                     </TextBox>
 
                 </Grid>
@@ -95,7 +135,7 @@
 
             <Border Grid.Column="7"
                     Grid.Row="0"
-                    Grid.RowSpan="4"
+                    Grid.RowSpan="5"
                     Margin="0,0,0,0"
                     BorderBrush="#FFCCCCCC"
                     Background="#FF6495ED"
@@ -105,7 +145,7 @@
 
             <Border Grid.Column="8"
                     Grid.Row="0"
-                    Grid.RowSpan="4"
+                    Grid.RowSpan="5"
                     Margin="0,0,100,0"
                     BorderBrush="#FFCCCCCC"
                     Background="#FFEEEEEE"
@@ -115,32 +155,46 @@
 
             <Border Grid.Column="8" 
                     Grid.Row="0"
-                    Grid.RowSpan="4"
+                    Grid.RowSpan="5"
                     BorderThickness="0"
                     BorderBrush="#FFCCCCCC"
                     Background="#FFEEEEEE"
                     CornerRadius="10">
                 <DockPanel Margin="2">
-                    <DockPanel DockPanel.Dock="Top">
+                    <StackPanel DockPanel.Dock="Top">
+                        <DockPanel >
 
-                        <TextBlock  DockPanel.Dock="Left" Text="OUTPUT" FontSize="18" FontWeight="Bold" Margin="3,5,0,0" FontFamily="Segoe UI" FontStyle="Normal" Foreground="#FF707070"/>
+                            <TextBlock  DockPanel.Dock="Left" Text="OUTPUT" FontSize="18" FontWeight="Bold" Margin="3,5,0,0" FontFamily="Segoe UI" FontStyle="Normal" Foreground="#FF707070"/>
 
 
-                        <Border DockPanel.Dock="Right" x:Name="ExitBorder" CornerRadius="4" BorderBrush="#FFE04F4F" BorderThickness="2" HorizontalAlignment="Right" Margin="0,3,3,0" VerticalAlignment="Top" Width="24" Height="24" Background="Transparent">
-                            <Button x:Name="Exit" 
-                        Content="X" 
-                        Background="#FFE04F4F" 
-                        Foreground="White" 
-                        FontFamily="Arial" 
-                        BorderThickness="0" 
-                        Click="Exit_Click" 
-                        Style="{StaticResource ExitButton}"/>
+                            <Border DockPanel.Dock="Right" x:Name="ExitBorder" CornerRadius="4" BorderBrush="#FFE04F4F" BorderThickness="2" HorizontalAlignment="Right" Margin="0,3,3,0" VerticalAlignment="Top" Width="24" Height="24" Background="Transparent">
+                                <Button x:Name="Exit" 
+                            Content="X" 
+                            Background="#FFE04F4F" 
+                            Foreground="White" 
+                            FontFamily="Arial" 
+                            BorderThickness="0" 
+                            Click="Exit_Click" 
+                            Style="{StaticResource ExitButton}"/>
+                            </Border>
+                        </DockPanel>
+
+                        <TextBlock x:Name="TimeBlock" Foreground="#FF707070" Margin="3, 5, 0,0" FontStyle="Italic">
+                            
+                        </TextBlock>
+
+                        <Border Height="1" Background="#FF969696" Margin="0,2,0,1">
+                            
                         </Border>
-                    </DockPanel>
-                   
-                    <ScrollViewer DockPanel.Dock="Bottom" Background="Transparent" VerticalScrollBarVisibility="Hidden">
-                        <StackPanel x:Name="ConsoleWindow" Margin="3,5,0,0">
+                    </StackPanel>
+
+                    <ScrollViewer  DockPanel.Dock="Bottom" Background="Transparent" VerticalScrollBarVisibility="Hidden" ScrollChanged="ScrollViewer_ScrollChanged" x:Name="ScrollViewer">
+                        <StackPanel x:Name="ConsoleWindow" Margin="3,1,0,0">
                             <!--<TextBlock DockPanel.Dock="Top" Text="Output" FontSize="12" FontWeight="Regular"/>-->
+
+                            <!--<ProgressBar Height="10" Maximum="100" Visibility="Visible" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" x:Name="BOM" IsIndeterminate="False" Value="10"/>-->
+
+
                         </StackPanel>
                     </ScrollViewer>
                 </DockPanel>
@@ -149,7 +203,7 @@
 
 
 
-            <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="10" Background="CornflowerBlue" BorderThickness="0" BorderBrush="CornflowerBlue" Margin="0,30,0,0" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Unspecified" TextOptions.TextFormattingMode="Ideal">
+            <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="10" Background="CornflowerBlue" BorderThickness="0" BorderBrush="CornflowerBlue" Margin="0,30,0,0" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Unspecified" TextOptions.TextFormattingMode="Ideal">
                 <Border CornerRadius="5" Background="White" BorderThickness="2" BorderBrush="CornflowerBlue" Margin="0" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality">
                     <Border x:Name="DragBlock"
                             CornerRadius="3" 
@@ -216,8 +270,8 @@
             <Border x:Name="Convert_Back"
                     IsEnabled="False"
                     Grid.Column="3" 
-                    Grid.Row="2"
-                    Margin="15,170,15,140"
+                    Grid.Row="3"
+                    Margin="15,140,15,110"
                     CornerRadius="3"
                     Background="#FFF4F4F4"
                     BorderBrush="#FF696969"
@@ -250,7 +304,7 @@
             </Border>
 
             <Border x:Name="OutBlock" 
-                    Grid.Row="2" 
+                    Grid.Row="3" 
                     Grid.Column="4"
                     Grid.ColumnSpan="2"
                     DragLeave="DragBlock_DragLeave" 
