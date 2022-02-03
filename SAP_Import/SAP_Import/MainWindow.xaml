@@ -188,7 +188,7 @@
                         </Border>
                     </StackPanel>
 
-                    <ScrollViewer  DockPanel.Dock="Bottom" Background="Transparent" VerticalScrollBarVisibility="Hidden" ScrollChanged="ScrollViewer_ScrollChanged" x:Name="ScrollViewer">
+                    <ScrollViewer CanContentScroll="True" DockPanel.Dock="Bottom" Background="Transparent" VerticalScrollBarVisibility="Hidden" ScrollChanged="ScrollViewer_ScrollChanged" x:Name="ScrollViewer">
                         <StackPanel x:Name="ConsoleWindow" Margin="3,1,0,0">
                             <!--<TextBlock DockPanel.Dock="Top" Text="Output" FontSize="12" FontWeight="Regular"/>-->
 

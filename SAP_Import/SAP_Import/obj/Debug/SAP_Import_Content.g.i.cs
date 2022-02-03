@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/back_blur.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("free-convert-icon-3209-thumb.ico")]
 
 

@@ -31,6 +31,9 @@ C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\PostSharp\p
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.csproj.ResolveComReference.cache
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\Interop.EnvDTE.dll
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\Interop.VSLangProj.dll
-C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\PopUp.g.cs
-C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\PopUp.baml
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\App.baml
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\bin\Debug\SAP_Import.exe.manifest
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\bin\Debug\SAP_Import.application
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.TrustInfo.xml
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.exe.manifest
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\obj\Debug\SAP_Import.application
