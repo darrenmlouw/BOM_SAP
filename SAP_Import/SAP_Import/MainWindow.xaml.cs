@@ -202,6 +202,7 @@ namespace SAP_Import
                 BomName.Text = "";
                 Warehouse.Text = "";
                 Convert_Back.IsEnabled = false;
+                Status.Text = "Status";
             }));
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -384,7 +385,7 @@ namespace SAP_Import
             partCount = 0;
 
             // Change the Headings here, in the Same Order as in the Exported BOM File
-            if(ImportExcelFile.ReadCell(0, 0) == "POS" &&
+            if (ImportExcelFile.ReadCell(0, 0) == "POS" &&
                 ImportExcelFile.ReadCell(0, 1) == "IPN" &&
                 ImportExcelFile.ReadCell(0, 2) == "CPN" &&
                 ImportExcelFile.ReadCell(0, 3) == "Quantity" &&
@@ -397,7 +398,7 @@ namespace SAP_Import
             {
                 isPos = true;
 
-                for(int i = 0; i < ImportExcelFile.rows; i++)
+                for (int i = 0; i < ImportExcelFile.rows; i++)
                 {
                     int number = 0;
 
@@ -407,6 +408,60 @@ namespace SAP_Import
                     }
                 }
             }
+            else
+            {
+                if (ImportExcelFile.ReadCell(0, 0) != "POS")
+                {
+                    print("Unable to find \"POS\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 0) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 1) != "IPN")
+                {
+                    print("Unable to find \"IPN\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 1) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 2) != "CPN")
+                {
+                    print("Unable to find \"CPN\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 2) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 3) != "Quantity")
+                {
+                    print("Unable to find \"Quantity\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 3) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 4) != "RefDes")
+                {
+                    print("Unable to find \"RefDes\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 4) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 5) != "Description")
+                {
+                    print("Unable to find \"Description\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 5) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 6) != "MPNs")
+                {
+                    print("Unable to find \"MPNs\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 6) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 7) != "CPN Commodity Group")
+                {
+                    print("Unable to find \"CPN Commodity Group\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 7) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 8) != "Classification")
+                {
+                    print("Unable to find \"Classification\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 8) + "\" Instead", 10, "", 255, 0, 0);
+                }
+                if (ImportExcelFile.ReadCell(0, 9) != "IPN (ALT)")
+                {
+                    print("Unable to find \"IPN (ALT)\"", 10, "");
+                    printColor("Found \"" + ImportExcelFile.ReadCell(0, 9) + "\" Instead", 10, "", 255, 0, 0);
+                }
+            }
+                
 
         }
 
@@ -639,6 +694,7 @@ namespace SAP_Import
             xlWorkSheet.Cells[position + 2, 2] = "'00";
             xlWorkSheet.Cells[position + 2, 5] = "'00";
             xlWorkSheet.Cells[position + 2, 6] = "WIP-SUB";
+            //Wastage 0 for THT
             xlWorkSheet.Cells[position + 2, 7] = "0";
             xlWorkSheet.Cells[position + 2, 9] = "1";
             xlWorkSheet.Cells[position + 2, 10] = "0";
@@ -652,7 +708,7 @@ namespace SAP_Import
 
             for (int i = 0; i < partCount; i++)
             {
-                if (ImportExcelFile.ReadCell(i + 1, 7) != "") //THT
+                if (ImportExcelFile.ReadCell(i + 1, 7) != "") //SMT
                 {
                     xlWorkSheet.Cells[position + 2, 1] = "'" + name.Replace(';', ':') + "S-MAT";
                     xlWorkSheet.Cells[position + 2, 3] = SMTSequence.ToString();
@@ -671,7 +727,11 @@ namespace SAP_Import
                     xlWorkSheet.Cells[position + 2, 2] = "'00";
                     xlWorkSheet.Cells[position + 2, 5] = "'00";
                     xlWorkSheet.Cells[position + 2, 6] = "WIP";
-                    xlWorkSheet.Cells[position + 2, 7] = "0";
+
+                    //Wastage # for SMT
+                    string splitWastage = ImportExcelFile.ReadCell(i + 1, 7).Split(' ', 'C')[1];
+
+                    xlWorkSheet.Cells[position + 2, 7] = splitWastage;
                     xlWorkSheet.Cells[position + 2, 9] = ImportExcelFile.ReadCell(i + 1, 3).Replace(';', ':');
                     xlWorkSheet.Cells[position + 2, 10] = "0";
                     xlWorkSheet.Cells[position + 2, 11] = "100";
@@ -999,7 +1059,7 @@ namespace SAP_Import
 
             string savePath = "";
             savePath = ImportExcelFile.path;
-            string temp = savePath.Replace(ImportExcelFile.filename, "OITM - Incomar (OMAD & OMAE).csv");
+            string temp = savePath.Replace(ImportExcelFile.filename, "OITM.csv");
 
             try
             {
@@ -1113,7 +1173,7 @@ namespace SAP_Import
             print("->\tSaving OITW.csv", 10, "");
             string savePath = "";
             savePath = ImportExcelFile.path;
-            string temp = savePath.Replace(ImportExcelFile.filename, "OITW - Incomar (OMAD & OMAE).csv");
+            string temp = savePath.Replace(ImportExcelFile.filename, "OITW.csv");
 
             try
             {

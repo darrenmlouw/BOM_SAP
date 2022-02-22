@@ -91,14 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SAP_Import.exe" size="872368">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SAP_Import.exe" size="873904">
       <assemblyIdentity name="SAP_Import" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>TgdkVEq54XeEFKZ4W0eZh0rjEjQlW/W68+lRY69yvG0=</dsig:DigestValue>
+        <dsig:DigestValue>Ae93wBgJXYIj1z9q58Kc/DbMI3c5LuwT0h7VIpLA3So=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
