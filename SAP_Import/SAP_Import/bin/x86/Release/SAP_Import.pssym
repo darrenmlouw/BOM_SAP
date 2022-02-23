@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Symbols LinesOfCode="945" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.10.5.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+  <Class Class="#1=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute">
+    <Instance Declaration="#2=M:[SAP_Import]SAP_Import.MainWindow::print(System.String, System.Double, System.String)" Id="ab23602ab1b049b3">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#3=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute+DispatchedMethodAspect" Description="#4=Executes the method in the object thread" Ordinal="3" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#5=M:[SAP_Import]SAP_Import.MainWindow::printColor(System.String, System.Double, System.String, System.Int32, System.Int32, System.Int32)" Id="ab23602af3c67b77">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#3" Description="#4" Ordinal="4" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#6=M:[SAP_Import]SAP_Import.MainWindow::ProgressStart()" Id="ab23602a38548077">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#3" Description="#4" Ordinal="5" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#7=M:[SAP_Import]SAP_Import.MainWindow::ProgressEnd()" Id="ab23602a58cb4c98">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#3" Description="#4" Ordinal="6" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#8=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.BackgroundAttribute">
+    <Instance Declaration="#9=M:[SAP_Import]SAP_Import.MainWindow::DragBlock_Drop(System.Object, System.Windows.DragEventArgs)" Id="ab23602ac264b84e">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#8" Description="#10=Executes the method asynchronously in the thread pool" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#11=M:[SAP_Import]SAP_Import.MainWindow::Convert_Click(System.Object, System.Windows.RoutedEventArgs)" Id="ab23602a789a0c14">
+      <Target LinesAvoided="1">
+        <JoinPoint Advising="#8" Description="#10" Ordinal="2" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#12=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute+DispatcherObjectAspect">
+    <Instance Declaration="#13=T:[SAP_Import]SAP_Import.MainWindow">
+      <Target LinesAvoided="5">
+        <JoinPoint Description="#14=Introduces interface(s) IDispatcherObject" Ordinal="0" LinesAvoided="2" />
+      </Target>
+    </Instance>
+  </Class>
+</Symbols>

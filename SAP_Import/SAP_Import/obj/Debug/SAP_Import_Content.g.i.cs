@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("free-convert-icon-3209-thumb.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("custom-icon-design-flatastic-9-themes.ico")]
 
 

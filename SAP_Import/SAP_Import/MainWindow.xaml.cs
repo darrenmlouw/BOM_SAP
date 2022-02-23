@@ -187,6 +187,26 @@ namespace SAP_Import
             DragBlock.Background = new System.Windows.Media.SolidColorBrush(Color.FromArgb(153, 200, 200, 200));
         }
 
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+
+            if (e.ClickCount == 2)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    this.WindowState = WindowState.Normal;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Maximized;
+                }
+            }
+        }
+
         // Checks for the .xlsx File Extensions
         // Changes Colour of Block Depending on the Success of the Drop
         // Stores Information Regaring the Dragged File (Filename, Path, Extension)

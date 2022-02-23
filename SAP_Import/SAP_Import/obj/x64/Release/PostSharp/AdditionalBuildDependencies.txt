@@ -1,0 +1,2 @@
+C:\ProgramData\PostSharp\6.10.5\bin.Release\net472\PostSharp.Compiler.Engine.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\postsharp.config

@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\x86\Release\Import_Installer_1.0.7.0_x86.msix
+SymbolPackage=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\obj\x86\Release\Symbols\Import_Installer_1.0.7.0_x86.appxsym

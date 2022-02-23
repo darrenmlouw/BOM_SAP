@@ -1,0 +1,10 @@
+obj\Debug\filemap.pri
+obj\Debug\filemap.map.txt
+obj\Debug\filemap.scale-100.pri
+obj\Debug\filemap.scale-100.map.txt
+obj\Debug\filemap.scale-125.pri
+obj\Debug\filemap.scale-125.map.txt
+obj\Debug\filemap.scale-150.pri
+obj\Debug\filemap.scale-150.map.txt
+obj\Debug\filemap.scale-400.pri
+obj\Debug\filemap.scale-400.map.txt

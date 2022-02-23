@@ -1,0 +1,6 @@
+MainPackage=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\x64\Release\Import_Installer_1.0.7.0_x64.msix
+SymbolPackage=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\obj\x64\Release\Symbols\Import_Installer_1.0.7.0_x64.appxsym
+ResourcePack=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\x64\Release\Import_Installer_1.0.7.0_scale-100.msix
+ResourcePack=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\x64\Release\Import_Installer_1.0.7.0_scale-125.msix
+ResourcePack=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\x64\Release\Import_Installer_1.0.7.0_scale-150.msix
+ResourcePack=C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\x64\Release\Import_Installer_1.0.7.0_scale-400.msix

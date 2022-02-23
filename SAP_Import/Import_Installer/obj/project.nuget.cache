@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6yS6o0FP+lE7BMbJS5zUWGlO6AwhALvAty4vFGAlW4zPhRwLVlLX6GwwtoM8L2VhryZMo6YydTRm/4mlf0rm6A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Darren\\source\\repos\\BOM_SAP\\SAP_Import\\Import_Installer\\Import_Installer.wapproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages\\microsoft.windows.sdk.buildtools\\10.0.22000.194\\microsoft.windows.sdk.buildtools.10.0.22000.194.nupkg.sha512"
+  ],
+  "logs": []
+}
