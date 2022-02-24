@@ -59,9 +59,9 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="200*"/>
                         <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="300*"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
@@ -79,7 +79,7 @@
                          FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
                         TextWrapping="WrapWithOverflow"
                         TextTrimming="CharacterEllipsis"
-                         x:Name="Name"><Run Text="Project Code"/></TextBlock>
+                         x:Name="Name"><Run Text="Product Code"/></TextBlock>
 
                     <TextBlock Grid.Column="0" 
                                Grid.Row="2"
@@ -91,7 +91,7 @@
                                  FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"
                                  TextWrapping="WrapWithOverflow"
                                  TextTrimming="CharacterEllipsis"
-                                 ><Run Text="Warehouse"/></TextBlock>
+                                 ><Run Text="MOQ Warehouse"/></TextBlock>
 
                     <Border Grid.Column="1" Grid.RowSpan="3" Background="#FFC8C8C8"/>
 

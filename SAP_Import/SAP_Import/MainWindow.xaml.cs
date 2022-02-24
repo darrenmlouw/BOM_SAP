@@ -120,6 +120,7 @@ namespace SAP_Import
         private ProgressBar Prog_BOM_Items = new ProgressBar();
         private ProgressBar Prog_BOM_Scraps = new ProgressBar();
         private ProgressBar Prog_BOM_Coproducts = new ProgressBar();
+        private ProgressBar Prog_BOM_Attachments = new ProgressBar();
         private ProgressBar Prog_OITM = new ProgressBar();
         private ProgressBar Prog_OITW = new ProgressBar();
         private ProgressBar Prog_Substitutes = new ProgressBar();
@@ -380,6 +381,7 @@ namespace SAP_Import
                     Create_BOM_Items();
                     Create_BOM_Scraps();
                     Create_BOM_Coproducts();
+                    Create_BOM_Attachments();
                     Create_OITM();
                     Create_OITW();
                     Create_Substitutes();
@@ -653,25 +655,25 @@ namespace SAP_Import
             xlWorkSheet.Cells[1, 4] = "ItemCode";
             xlWorkSheet.Cells[1, 5] = "Item_Revision";
             xlWorkSheet.Cells[1, 6] = "Warehouse";
-            xlWorkSheet.Cells[1, 7] = "Factor";
-            xlWorkSheet.Cells[1, 8] = "FactorDesc";
-            xlWorkSheet.Cells[1, 9] = "Quantity";
-            xlWorkSheet.Cells[1, 10] = "ScrapPercent";
-            xlWorkSheet.Cells[1, 11] = "Yield";
-            xlWorkSheet.Cells[1, 12] = "IssueType";
-            xlWorkSheet.Cells[1, 13] = "OcrCode";
-            xlWorkSheet.Cells[1, 14] = "OcrCode2";
-            xlWorkSheet.Cells[1, 15] = "OcrCode3";
-            xlWorkSheet.Cells[1, 16] = "OcrCode4";
-            xlWorkSheet.Cells[1, 17] = "OcrCode5";
-            xlWorkSheet.Cells[1, 18] = "Project";
-            xlWorkSheet.Cells[1, 19] = "SubcontractingItem";
-            xlWorkSheet.Cells[1, 20] = "Remarks";
-            xlWorkSheet.Cells[1, 21] = "Formula";
+            xlWorkSheet.Cells[1, 7] = "BinCode";
+            xlWorkSheet.Cells[1, 8] = "Factor";
+            xlWorkSheet.Cells[1, 9] = "FactorDesc";
+            xlWorkSheet.Cells[1, 10] = "Quantity";
+            xlWorkSheet.Cells[1, 11] = "ScrapPercent";
+            xlWorkSheet.Cells[1, 12] = "Yield";
+            xlWorkSheet.Cells[1, 13] = "IssueType";
+            xlWorkSheet.Cells[1, 14] = "OcrCode";
+            xlWorkSheet.Cells[1, 15] = "OcrCode2";
+            xlWorkSheet.Cells[1, 16] = "OcrCode3";
+            xlWorkSheet.Cells[1, 17] = "OcrCode4";
+            xlWorkSheet.Cells[1, 18] = "OcrCode5";
+            xlWorkSheet.Cells[1, 19] = "Project";
+            xlWorkSheet.Cells[1, 20] = "SubcontractingItem";
+            xlWorkSheet.Cells[1, 21] = "Remarks";
+            xlWorkSheet.Cells[1, 22] = "Formula";
 
             int THTSequence = 10;
             int SMTSequence = 10;
-
 
             int position = 0;
             for (int i = 0; i < partCount; i++)
@@ -695,13 +697,14 @@ namespace SAP_Import
                     xlWorkSheet.Cells[position + 2, 2] = "'00";
                     xlWorkSheet.Cells[position + 2, 5] = "'00";
                     xlWorkSheet.Cells[position + 2, 6] = "WIP";
-                    xlWorkSheet.Cells[position + 2, 7] = "0";
-                    xlWorkSheet.Cells[position + 2, 9] = "'" + ImportExcelFile.ReadCell(i + 1, 3).Replace(';', ':');
-                    xlWorkSheet.Cells[position + 2, 10] = "0";
-                    xlWorkSheet.Cells[position + 2, 11] = "100";
-                    xlWorkSheet.Cells[position + 2, 12] = "M";
-                    xlWorkSheet.Cells[position + 2, 19] = "N";
-                    xlWorkSheet.Cells[position + 2, 20] = "'" + ImportExcelFile.ReadCell(i + 1, 4).Replace(';', ':');
+                    xlWorkSheet.Cells[position + 2, 7] = "";
+                    xlWorkSheet.Cells[position + 2, 8] = "0";
+                    xlWorkSheet.Cells[position + 2, 10] = "'" + ImportExcelFile.ReadCell(i + 1, 3).Replace(';', ':');
+                    xlWorkSheet.Cells[position + 2, 11] = "0";
+                    xlWorkSheet.Cells[position + 2, 12] = "100";
+                    xlWorkSheet.Cells[position + 2, 13] = "M";
+                    xlWorkSheet.Cells[position + 2, 20] = "N";
+                    xlWorkSheet.Cells[position + 2, 21] = "'" + ImportExcelFile.ReadCell(i + 1, 4).Replace(';', ':');
 
                     THTSequence = THTSequence + 10;
                     position++;
@@ -714,14 +717,15 @@ namespace SAP_Import
             xlWorkSheet.Cells[position + 2, 2] = "'00";
             xlWorkSheet.Cells[position + 2, 5] = "'00";
             xlWorkSheet.Cells[position + 2, 6] = "WIP-SUB";
+            xlWorkSheet.Cells[position + 2, 7] = "";
             //Wastage 0 for THT
-            xlWorkSheet.Cells[position + 2, 7] = "0";
-            xlWorkSheet.Cells[position + 2, 9] = "1";
-            xlWorkSheet.Cells[position + 2, 10] = "0";
-            xlWorkSheet.Cells[position + 2, 11] = "100";
-            xlWorkSheet.Cells[position + 2, 12] = "M";
-            xlWorkSheet.Cells[position + 2, 19] = "N";
-            xlWorkSheet.Cells[position + 2, 20] = "";
+            xlWorkSheet.Cells[position + 2, 8] = "0";
+            xlWorkSheet.Cells[position + 2, 10] = "1";
+            xlWorkSheet.Cells[position + 2, 11] = "0";
+            xlWorkSheet.Cells[position + 2, 12] = "100";
+            xlWorkSheet.Cells[position + 2, 13] = "M";
+            xlWorkSheet.Cells[position + 2, 20] = "N";
+            xlWorkSheet.Cells[position + 2, 21] = "";
             position++;
 
 
@@ -747,17 +751,17 @@ namespace SAP_Import
                     xlWorkSheet.Cells[position + 2, 2] = "'00";
                     xlWorkSheet.Cells[position + 2, 5] = "'00";
                     xlWorkSheet.Cells[position + 2, 6] = "WIP";
-
+                    xlWorkSheet.Cells[position + 2, 7] = "";
                     //Wastage # for SMT
                     string splitWastage = ImportExcelFile.ReadCell(i + 1, 7).Split(' ', 'C')[1];
 
-                    xlWorkSheet.Cells[position + 2, 7] = splitWastage;
-                    xlWorkSheet.Cells[position + 2, 9] = ImportExcelFile.ReadCell(i + 1, 3).Replace(';', ':');
-                    xlWorkSheet.Cells[position + 2, 10] = "0";
-                    xlWorkSheet.Cells[position + 2, 11] = "100";
-                    xlWorkSheet.Cells[position + 2, 12] = "M";
-                    xlWorkSheet.Cells[position + 2, 19] = "N";
-                    xlWorkSheet.Cells[position + 2, 20] = ImportExcelFile.ReadCell(i + 1, 4).Replace(';', ':');
+                    xlWorkSheet.Cells[position + 2, 8] = splitWastage;
+                    xlWorkSheet.Cells[position + 2, 10] = ImportExcelFile.ReadCell(i + 1, 3).Replace(';', ':');
+                    xlWorkSheet.Cells[position + 2, 11] = "0";
+                    xlWorkSheet.Cells[position + 2, 12] = "100";
+                    xlWorkSheet.Cells[position + 2, 13] = "M";
+                    xlWorkSheet.Cells[position + 2, 20] = "N";
+                    xlWorkSheet.Cells[position + 2, 21] = ImportExcelFile.ReadCell(i + 1, 4).Replace(';', ':');
 
                     SMTSequence = SMTSequence + 10;
                     position++;
@@ -986,6 +990,82 @@ namespace SAP_Import
             {
                 Prog_BOM_Coproducts.IsIndeterminate = false;
                 Prog_BOM_Coproducts.Visibility = Visibility.Collapsed;
+            }));
+        }
+
+        private void Create_BOM_Attachments()
+        {
+            timer = 0;
+
+            print("BOM_Attachments", 10, "bold");
+
+            Dispatcher.Invoke((Action)(() =>
+            {
+                Prog_BOM_Attachments.Maximum = 100;
+                Prog_BOM_Attachments.Height = 10;
+                Prog_BOM_Attachments.Visibility = Visibility.Visible;
+                Prog_BOM_Attachments.HorizontalAlignment = HorizontalAlignment.Stretch;
+                Prog_BOM_Attachments.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                Prog_BOM_Attachments.IsIndeterminate = true;
+                Prog_BOM_Attachments.Value = 0;
+
+                ConsoleWindow.Children.Add(Prog_BOM_Attachments);
+            }));
+
+            print("->\tConverting BOM_Attachments.csv", 10, "");
+
+            Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            if (xlApp == null)
+            {
+                MessageBox.Show("Excel is not properly installed!!");
+            }
+
+
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+            //xlWorkBook.Worksheets.Add
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+
+            xlWorkSheet.Cells[1, 1] = "BOM_ItemCode";
+            xlWorkSheet.Cells[1, 2] = "Revision";
+            xlWorkSheet.Cells[1, 3] = "AttachmentPath";
+
+
+            print("->\tSaving BOM_Attachments.csv", 10, "");
+            string savePath = "";
+            savePath = ImportExcelFile.path;
+            string temp = savePath.Replace(ImportExcelFile.filename, "BOM_Attachments.csv");
+
+            try
+            {
+                xlWorkBook.SaveAs(temp, Excel.XlFileFormat.xlCSVWindows, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlLocalSessionChanges, true, System.Reflection.Missing.Value, Excel.XlTextVisualLayoutType.xlTextVisualRTL, true);
+                print("->\tSaved BOM_Attachments.csv", 10, "");
+                print("->\tConversion Time: " + timer.ToString() + "ms", 10, "");
+                print(temp, 10, "");
+                print("line", 0, "");
+            }
+            catch
+            {
+                printColor("->\tUnable to Save BOM_Attachments.csv", 10, "", 255, 0, 0);
+                print("->\tConversion Time: " + timer.ToString() + "ms", 10, "");
+                print(temp, 10, "");
+                print("line", 0, "");
+            }
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
+
+            Marshal.ReleaseComObject(xlWorkSheet);
+            Marshal.ReleaseComObject(xlWorkBook);
+            Marshal.ReleaseComObject(xlApp);
+
+            Dispatcher.Invoke((Action)(() =>
+            {
+                Prog_BOM_Attachments.IsIndeterminate = false;
+                Prog_BOM_Attachments.Visibility = Visibility.Collapsed;
             }));
         }
 
