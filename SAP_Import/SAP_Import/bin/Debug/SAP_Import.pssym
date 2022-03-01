@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Symbols LinesOfCode="1278" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.10.5.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+<Symbols LinesOfCode="1285" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.10.5.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
   <Class Class="#1=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute">
-    <Instance Declaration="#2=M:[SAP_Import]SAP_Import.MainWindow::print(System.String, System.Double, System.String)" Id="ab23602a693c10ba">
+    <Instance Declaration="#2=M:[SAP_Import]SAP_Import.MainWindow::print(System.String, System.Double, System.String)" Id="ab23602a62ad7bf4">
       <Target LinesAvoided="1">
         <JoinPoint Advising="#3=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.DispatchedAttribute+DispatchedMethodAspect" Description="#4=Executes the method in the object thread" Ordinal="3" />
       </Target>
     </Instance>
-    <Instance Declaration="#5=M:[SAP_Import]SAP_Import.MainWindow::printColor(System.String, System.Double, System.String, System.Int32, System.Int32, System.Int32)" Id="ab23602a548b305c">
+    <Instance Declaration="#5=M:[SAP_Import]SAP_Import.MainWindow::printColor(System.String, System.Double, System.String, System.Int32, System.Int32, System.Int32)" Id="ab23602a90a1e2c0">
       <Target LinesAvoided="1">
         <JoinPoint Advising="#3" Description="#4" Ordinal="4" />
       </Target>
     </Instance>
-    <Instance Declaration="#6=M:[SAP_Import]SAP_Import.MainWindow::ProgressStart()" Id="ab23602a525e7536">
+    <Instance Declaration="#6=M:[SAP_Import]SAP_Import.MainWindow::ProgressStart()" Id="ab23602ad23dc221">
       <Target LinesAvoided="1">
         <JoinPoint Advising="#3" Description="#4" Ordinal="5" />
       </Target>
     </Instance>
-    <Instance Declaration="#7=M:[SAP_Import]SAP_Import.MainWindow::ProgressEnd()" Id="ab23602a0854ab7e">
+    <Instance Declaration="#7=M:[SAP_Import]SAP_Import.MainWindow::ProgressEnd()" Id="ab23602aced5eca5">
       <Target LinesAvoided="1">
         <JoinPoint Advising="#3" Description="#4" Ordinal="6" />
       </Target>
     </Instance>
   </Class>
   <Class Class="#8=T:[PostSharp.Patterns.Threading]PostSharp.Patterns.Threading.BackgroundAttribute">
-    <Instance Declaration="#9=M:[SAP_Import]SAP_Import.MainWindow::DragBlock_Drop(System.Object, System.Windows.DragEventArgs)" Id="ab23602a79f494d8">
+    <Instance Declaration="#9=M:[SAP_Import]SAP_Import.MainWindow::DragBlock_Drop(System.Object, System.Windows.DragEventArgs)" Id="ab23602a5821a081">
       <Target LinesAvoided="1">
         <JoinPoint Advising="#8" Description="#10=Executes the method asynchronously in the thread pool" />
       </Target>
     </Instance>
-    <Instance Declaration="#11=M:[SAP_Import]SAP_Import.MainWindow::Convert_Click(System.Object, System.Windows.RoutedEventArgs)" Id="ab23602a078f584a">
+    <Instance Declaration="#11=M:[SAP_Import]SAP_Import.MainWindow::Convert_Click(System.Object, System.Windows.RoutedEventArgs)" Id="ab23602a9495f521">
       <Target LinesAvoided="1">
         <JoinPoint Advising="#8" Description="#10" Ordinal="2" />
       </Target>

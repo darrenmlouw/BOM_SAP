@@ -1141,6 +1141,18 @@ namespace SAP_Import
 
                 //ItemName
                 xlWorkSheet.Cells[i + 3, 2] = ImportExcelFile.ReadCell(i + 1, 5).Replace(';', ':');
+                //ForeignName
+
+                if(ImportExcelFile.ReadCell(i + 1, 7).Replace(';', ':') == "")
+                {
+                    xlWorkSheet.Cells[i + 3, 3] = "THT";
+                }
+                else
+                {
+                    xlWorkSheet.Cells[i + 3, 3] = "SMT";
+                }
+
+
                 //ItemGroupCode
                 xlWorkSheet.Cells[i + 3, 4] = ImportExcelFile.ReadCell(i + 1, 8).Replace(';', ':');
                 //MPN
