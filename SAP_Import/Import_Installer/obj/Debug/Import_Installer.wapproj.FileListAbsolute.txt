@@ -27,3 +27,16 @@ C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\obj\Debug\quali
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\obj\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\obj\Debug\ProjectArchitectures.txt
 C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\obj\Debug\Import_Installer.wapproj.LastBuild.txt
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\ControlzEx.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MahApps.Metro.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MaterialDesignColors.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MaterialDesignThemes.MahApps.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MaterialDesignThemes.Wpf.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\Microsoft.Xaml.Behaviors.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\Serilog.dll
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\ControlzEx.pdb
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MahApps.Metro.pdb
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MaterialDesignColors.pdb
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MaterialDesignThemes.MahApps.pdb
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\MaterialDesignThemes.Wpf.pdb
+C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\SAP_Import\Microsoft.Xaml.Behaviors.pdb

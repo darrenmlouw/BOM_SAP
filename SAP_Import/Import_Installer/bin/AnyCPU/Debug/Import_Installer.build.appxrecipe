@@ -251,6 +251,24 @@
     <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\Import_Installer\bin\AnyCPU\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\ControlzEx.4.3.0\lib\net462\ControlzEx.dll">
+      <PackagePath>SAP_Import\ControlzEx.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\MahApps.Metro.2.0.0\lib\net47\MahApps.Metro.dll">
+      <PackagePath>SAP_Import\MahApps.Metro.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\MaterialDesignColors.2.0.4\lib\net452\MaterialDesignColors.dll">
+      <PackagePath>SAP_Import\MaterialDesignColors.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\MaterialDesignThemes.MahApps.0.2.0\lib\net452\MaterialDesignThemes.MahApps.dll">
+      <PackagePath>SAP_Import\MaterialDesignThemes.MahApps.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\MaterialDesignThemes.4.3.0\lib\net452\MaterialDesignThemes.Wpf.dll">
+      <PackagePath>SAP_Import\MaterialDesignThemes.Wpf.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll">
+      <PackagePath>SAP_Import\Microsoft.Xaml.Behaviors.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\PostSharp.Redist.6.10.5\lib\net45\PostSharp.dll">
       <PackagePath>SAP_Import\PostSharp.dll</PackagePath>
     </AppxPackagedFile>
@@ -262,6 +280,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\PostSharp.Patterns.Threading.Redist.6.10.5\lib\net45\PostSharp.Patterns.Threading.dll">
       <PackagePath>SAP_Import\PostSharp.Patterns.Threading.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\packages\Serilog.2.10.0\lib\net46\Serilog.dll">
+      <PackagePath>SAP_Import\Serilog.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Darren\source\repos\BOM_SAP\SAP_Import\SAP_Import\bin\Debug\SAP_Import.exe">
       <PackagePath>SAP_Import\SAP_Import.exe</PackagePath>

@@ -7,7 +7,7 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="eb4018ba-a93e-4ed0-9d24-d219bc64e48d" Publisher="CN=Darren" Version="1.0.1.0" ProcessorArchitecture="neutral" />
+  <Identity Name="eb4018ba-a93e-4ed0-9d24-d219bc64e48d" Publisher="CN=Darren" Version="1.0.7.0" ProcessorArchitecture="neutral" />
   <Properties>
     <DisplayName>SAP Import</DisplayName>
     <PublisherDisplayName>Darren</PublisherDisplayName>
@@ -31,7 +31,7 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
-        <uap:LockScreen BadgeLogo="Images\BadgeLogo.png" Notification="badgeAndTileText" />
+        <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Images\BadgeLogo.png" />
       </uap:VisualElements>
     </Application>
   </Applications>

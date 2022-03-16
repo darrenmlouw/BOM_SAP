@@ -23,7 +23,7 @@
     </Window.Resources>
 
 
-    <Border Background="White" CornerRadius="10, 10, 10, 10" BorderThickness="5" BorderBrush="#FF6495ED">
+    <Border Background="White" CornerRadius="10, 10, 10, 10" BorderThickness="4" BorderBrush="#FF6495ED">
         <Grid Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
